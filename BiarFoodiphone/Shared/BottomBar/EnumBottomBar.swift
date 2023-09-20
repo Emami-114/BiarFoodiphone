@@ -6,3 +6,52 @@
 //
 
 import Foundation
+import SwiftUI
+enum BottomBar: String,CaseIterable {
+    case home
+    case search,cart,favorite,account
+    
+    var title: String{
+        switch self {
+        case .home: return "Home"
+        case .search:
+            return "Suche"
+        case .cart:
+                return "Warenkorb"
+        case .favorite:
+            return "Favoriten"
+        case .account:
+            return "Konto"
+        }
+    }
+    
+    var icon: String{
+        switch self {
+        case .home:
+            return "house.fill"
+        case .search:
+            return "magnifyingglass"
+        case .cart:
+            return "cart"
+        case .favorite:
+            return "heart"
+        case .account:
+            return "person.fill"
+        }
+    }
+
+//    var view : AnyView {
+//        switch self {
+//        case .home:
+//            return AnyView(HomeView(sidbarShowing: .constant(false)))
+//        case .search:
+//            return AnyView(Text("search View"))
+//        case .cart:
+//            return AnyView(Text("Cart View"))
+//        case .favorite:
+//            return AnyView(Text("Favorite View"))
+//        case .account:
+//            return AnyView(Text("Account View"))
+//        }
+//    }
+}

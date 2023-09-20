@@ -6,3 +6,12 @@
 //
 
 import Foundation
+enum EnumSidbarMenu: CaseIterable {
+case account
+case order
+case notifications
+case help
+case privacy
+case imprint
+    
+}

@@ -6,3 +6,38 @@
 //
 
 import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+import Combine
+class CategoriesRepository {
+    static let shared = CategoriesRepository()
+    var categories = CurrentValueSubject<[Category],Never>([])
+    
+
+    
+    func fetchCategories(){
+        
+        FirebaseManager.shared.database.collection("categories")
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                
+                guard let document = querySnapshot?.documents else {
+                    print("Fehler beim laden Categories")
+                    return
+                }
+                
+                let categories = document.compactMap { queryDocument -> Category? in
+                    let category = try? queryDocument.data(as: Category.self)
+                    return category
+                }
+                
+                self.categories.send(categories)
+            }
+    }
+    
+}
+
+

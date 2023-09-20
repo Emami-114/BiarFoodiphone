@@ -8,13 +8,42 @@
 import SwiftUI
 
 struct BottomBarView: View {
+    @ObservedObject private var viewModel : BottomBarViewModel
+    @Binding var showSiderBar: Bool
+    init(showSiderBar: Binding<Bool>){
+        self._showSiderBar = showSiderBar
+        self.viewModel = BottomBarViewModel(showSiderBar: showSiderBar)
+    }
+    
+    @Namespace var nameSpace
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ZStack(alignment: .bottom) {
+                viewModel.view
+                Spacer()
+                    HStack(){
+                        ForEach(BottomBar.allCases,id: \.self) { bottomBar in
+                            BottomBarIcon(bottomBar: bottomBar,showSiderBar: $showSiderBar, cartCount: $viewModel.cartCounter, nameSpace: nameSpace)
+                                
+                                
+                        }
+                    }.frame(maxWidth: .infinity)
+                        .background(
+                            Rectangle().fill(Color.white).shadow(color: Color.black.opacity(0.15),radius: 5,x: 0,y: -4))
+                        
+            }.frame(maxHeight: .infinity,alignment: .bottom)
+        }
+        .environmentObject(viewModel)
+
+        .onAppear{
+            viewModel.fetchCartCount()
+        }
     }
 }
 
+
 struct BottomBarView_Previews: PreviewProvider {
     static var previews: some View {
-        BottomBarView()
+        BottomBarView(showSiderBar: .constant(false))
     }
 }

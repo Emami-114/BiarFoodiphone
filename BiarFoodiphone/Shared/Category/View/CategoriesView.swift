@@ -8,13 +8,37 @@
 import SwiftUI
 
 struct CategoriesView: View {
+    @EnvironmentObject var viewModel : CategorieViewModel
+    @EnvironmentObject var productViewModel : ProductsViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        responsiveView { props in
+            ScrollView(.vertical,showsIndicators: false) {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(),spacing: 5), count: props.isIpad ? 6 : 4)) {
+                    ForEach(viewModel.categories.filter({ category in
+                        category.type == "Main"
+                    }),id: \.id){category in
+                        NavigationLink(destination:
+                                ProductsView(categorieId: category.id ?? "")
+                            .environmentObject(productViewModel)
+                            .environmentObject(viewModel)
+                        ) {
+                            CategoryCell(category: category)
+                                
+                        }.foregroundColor(.black)
+                    }
+                }
+                
+            }
+            .padding()
+        }
+        
     }
 }
 
 struct CategoriesListView_Previews: PreviewProvider {
     static var previews: some View {
         CategoriesView()
+            .environmentObject(CategorieViewModel())
+            .environmentObject(ProductsViewModel())
     }
 }

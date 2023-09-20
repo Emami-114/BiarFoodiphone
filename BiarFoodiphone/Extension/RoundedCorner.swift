@@ -7,25 +7,6 @@
 
 import SwiftUI
 
-struct RectangleExtension: View {
-    var body: some View {
-        VStack{
-            Rectangle()
-                .roundedCornerView(corners: .topLeft, radius: 600)
-                .frame(width: 300,height: 300)
-            
-
-        }
-    }
-}
-
-struct RectangleExtension_Previews: PreviewProvider {
-    static var previews: some View {
-            RectangleExtension()
-        
-            
-    }
-}
 
 extension View {
     func roundedCornerView(corners: UIRectCorner,radius: CGFloat) -> some View {

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+struct TableModel: Identifiable{
+    var id = UUID()
+    var title: String
+    var nutritionValue: String
+}
