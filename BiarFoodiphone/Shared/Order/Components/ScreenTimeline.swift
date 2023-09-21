@@ -31,5 +31,5 @@ struct ScreenTimeline: View {
 
 #Preview {
     ScreenTimeline()
-        .environmentObject(OrderViewModel())
+        .environmentObject(OrderViewModel(products: []))
 }

@@ -11,8 +11,10 @@ class CartViewModel: ObservableObject {
     @Published var cartProductsId = [CartModel]()
     @Published var cartProducts = [Product]()
     @Published var cartProductsCount = 0
+    
     private let cartRepo = CartRepository.shared
     private var cancellable = Set<AnyCancellable>()
+
     
     init(){
         cartRepo.cartProductsId
@@ -33,6 +35,7 @@ class CartViewModel: ObservableObject {
         .store(in: &cancellable)
         
         productRemoveListner()
+        
     }
     
     func productRemoveListner(){
@@ -59,6 +62,23 @@ class CartViewModel: ObservableObject {
             }
         }
     }
+    
+    
+    
+    
+    func ordrProducts() -> [OrderProduct]{
+        var orderproducts = [OrderProduct]()
+        for i in cartProductsId{
+         let product = cartProducts.filter { product in
+                product.id == i.productId
+         }.first
+            guard let product1 = product else { return [] }
+            orderproducts.append(OrderProduct(id: product1.id ?? "", name: product1.title, quantity: i.quantity, netWeight: product1.netFillingQuantity, depositType: product1.deposit ? product1.depositType : nil, depositPrice: product1.deposit ? product1.depositPrice : nil, imageUrl: product1.imageUrl, price: product1.price, tax: product1.tax))
+        }
+        return orderproducts
+    }
+    
+    
     
     
     func depositPrice() -> Double{
@@ -102,6 +122,11 @@ class CartViewModel: ObservableObject {
         return totalprice
     }
 
+    
+    
+    
+    
+    
     func quantityPlus(with id: String){
         let productCount = cartProductsId.filter { proId in
             proId.productId == id

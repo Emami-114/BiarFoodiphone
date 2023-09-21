@@ -43,7 +43,6 @@ struct SignInView: View {
         
             
             Button{
-                
                     viewModel.login()
                     sidbarViewModel.currentItem = nil
                

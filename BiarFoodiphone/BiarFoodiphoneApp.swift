@@ -20,7 +20,8 @@ struct BiarFoodiphoneApp: App {
 //            SignUpView()
             ContentView()
                 .environmentObject(userViewModel)
-//            AuthenticationView()
+            
+//            ViewTest()
         }
     }
     

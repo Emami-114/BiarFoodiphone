@@ -47,31 +47,6 @@ extension CartRepository {
     }
     
     
-    func fetchCartProductIdSingle(with id: String,productCart: @escaping (_ data: CartModel) -> ()){
-        guard let userId = FirebaseManager.shared.userId else { return}
-         FirebaseManager.shared.database.collection("users").document(userId).collection("cart").document(id).getDocument(completion: { document, error in
-            if let error = error {
-                print("Fetching Faorite failed: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let document else {
-                print("Dukument existiert nicht!")
-                return
-            }
-            
-            do {
-                let productId = try document.data(as: CartModel.self)
-                productCart(productId)
-            }catch{
-                print("Dokument is kein Favorite: \(error.localizedDescription)")
-            }
-        })
-
-        
-    }
-    
-    
     func fetchCartProductId(){
         guard let userId = FirebaseManager.shared.userId else { return }
         FirebaseManager.shared.database.collection("users").document(userId).collection("cart")
@@ -101,6 +76,9 @@ extension CartRepository {
         FirebaseManager.shared.database.collection("users").document(userId).collection("cart")
             .document(id).delete()
     }
+    
+    
+
     
     func removeListener() {
         self.cartProducts.send([])
@@ -136,3 +114,16 @@ extension CartRepository {
 }
 
 
+
+//func delete(at offsets: IndexSet) {
+//  offsets.map { viewModel.todos[$0] }.forEach { todo in
+//    guard let todoID = todo.id else { return }
+//    db.collection("todos").document(todoID).delete() { err in
+//      if let err = err {
+//        print("Error removing document: \(err)")
+//      } else {
+//        print("Document successfully removed!")
+//      }
+//    }
+//  }
+//}

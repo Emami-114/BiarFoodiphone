@@ -8,9 +8,9 @@
 import Foundation
 import Combine
 class OrderAdressViewModel: ObservableObject {
-    
     @Published var loading = false
-    
+    @Published var adressResult = [AdressProperties]()
+    @Published var selectedAdresse : AdressProperties? = nil
     @Published var salutation: String = ""
     @Published var firstName: String = ""
     @Published var lastName: String = ""
@@ -35,6 +35,7 @@ class OrderAdressViewModel: ObservableObject {
     @Published var city2 = ""
     
     let userRepository = UserRepository.shared
+    let adressAutocompleteRepository = AdressAutocompleteRepository.shared
     var cancellable = Set<AnyCancellable>()
     
     
@@ -53,6 +54,8 @@ class OrderAdressViewModel: ObservableObject {
             self._country = Published(initialValue: user.country)
             self._city = Published(initialValue: user.city)
         }.store(in: &cancellable)
+        
+        
     }
     
     func newAdresse(){
@@ -67,6 +70,18 @@ class OrderAdressViewModel: ObservableObject {
             self._country = Published(initialValue: self.country2)
             self._city = Published(initialValue: self.city2)
          
+    }
+    
+    func selectedAdresseReplace(){
+        guard let terms = self.selectedAdresse?.terms else {return}
+      
+       
+        self.street2 = terms[0].value
+        self.houseNumber2 = terms[1].value
+        self.zipCode2 = terms.count == 2 ? terms[2].value : ""
+//        self.city2 = terms.contains(inde) ? terms[3].value : ""
+//        self.country2 = terms.count == 4 ? terms[4].value : ""
+        
     }
     
     func oldAdresse(){
@@ -91,6 +106,17 @@ class OrderAdressViewModel: ObservableObject {
         self.phoneNumber2 = ""
         self.country2 = ""
         self.city2 = ""
+    }
+    
+    func fetchAdresseCompletet(adreese: String) {
+        DispatchQueue.main.async {
+            Task{
+                let adressResult2 = try await self.adressAutocompleteRepository
+                    .autoCompletet(input: adreese)
+                self.adressResult = adressResult2
+            }
+        }
+
     }
     
 }

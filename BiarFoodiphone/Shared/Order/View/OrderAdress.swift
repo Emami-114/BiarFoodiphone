@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct OrderAdress: View {
-    @StateObject private var viewModel = OrderAdressViewModel()
+    @EnvironmentObject private var viewModel : OrderAdressViewModel
+    @FocusState private var adressFieldFocused : Bool
     @State private var showAdressDetail = false
     var body: some View {
         ZStack(alignment: .top) {
@@ -68,7 +69,11 @@ struct OrderAdress: View {
                 }
                 
             }
+            .onChange(of: viewModel.street2, perform: { value in
+                viewModel.fetchAdresseCompletet(adreese: value)
+            })
         }
+
         .animation(.spring(response: 0.4,dampingFraction: 0.6,blendDuration: 1), value: showAdressDetail)
     }
     
@@ -84,18 +89,24 @@ struct OrderAdress: View {
             HStack{
                 TextField("Straße", text: $viewModel.street2)
                     .DefaultTextFieldModifier(paddingHorizontal: 0)
-                TextField("Straße", text: $viewModel.houseNumber2)
+                    .focused($adressFieldFocused)
+                TextField("Hausenummer", text: $viewModel.houseNumber2)
                     .DefaultTextFieldModifier(paddingHorizontal: 0)
             }.padding(.horizontal)
-            
-            HStack{
-                TextField("PLZ", text: $viewModel.zipCode2)
-                    .DefaultTextFieldModifier(paddingHorizontal: 0)
-                TextField("Stadt", text: $viewModel.city2)
-                    .DefaultTextFieldModifier(paddingHorizontal: 0)
-            }.padding(.horizontal)
-            TextField("Handynummer", text: $viewModel.phoneNumber2)
-                .DefaultTextFieldModifier(paddingHorizontal: 15)
+            if !viewModel.adressResult.isEmpty && adressFieldFocused{
+                adresseCompletet
+            }else{
+                HStack{
+                    TextField("PLZ", text: $viewModel.zipCode2)
+                        .DefaultTextFieldModifier(paddingHorizontal: 0)
+                    TextField("Stadt", text: $viewModel.city2)
+                        .DefaultTextFieldModifier(paddingHorizontal: 0)
+                }.padding(.horizontal)
+                TextField("Handynummer", text: $viewModel.phoneNumber2)
+                    .DefaultTextFieldModifier(paddingHorizontal: 15)
+            }
+
+           
           
             HStack(spacing: 20){
                 Button{
@@ -129,7 +140,7 @@ struct OrderAdress: View {
                     .cornerRadius(10)
             }.padding(.horizontal)
                 .padding()
-            
+          
         }.padding(.vertical)
             .background(RoundedRectangle(cornerRadius: 20)
                 .stroke(lineWidth: 0.5).fill(Color.theme.iconColor))
@@ -140,12 +151,32 @@ struct OrderAdress: View {
                 .rotationEffect(Angle(degrees: -45))
                 .offset(y: -20)
         })
+        
         .padding()
+       
+    }
+    private var adresseCompletet : some View{
+        List(viewModel.adressResult,id: \.place_id){adress in
+            Button{
+                viewModel.selectedAdresse = adress
+                viewModel.selectedAdresseReplace()
+                adressFieldFocused.toggle()
+            }label: {
+                Text(adress.description)
+                    .font(.caption)
+            }.buttonStyle(.plain)
+           
+                
+        }.listStyle(.plain)
+        .frame(width: 300,height: 200)
+        .cornerRadius(10)
+
     }
 }
 
 struct OrderAdress_Previews: PreviewProvider {
     static var previews: some View {
         OrderAdress()
+            .environmentObject(OrderAdressViewModel())
     }
 }
