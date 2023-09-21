@@ -116,7 +116,7 @@ struct CartsView: View {
             .foregroundColor(Color.theme.iconColor)
             .padding(.horizontal,25)
             
-            NavigationLink(destination: OrderView()){
+            NavigationLink(destination: OrderView(products: viewModel.ordrProducts())){
                 Text("Zur Kasse")
             
                 .font(.title3.bold())

@@ -49,5 +49,5 @@ struct PaymentView: View {
 
 #Preview {
     PaymentView()
-        .environmentObject(OrderViewModel())
+        .environmentObject(OrderViewModel(products: []))
 }

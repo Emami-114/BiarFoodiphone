@@ -7,14 +7,6 @@
 
 import Foundation
 enum ErrorEnum: Error,LocalizedError {
-    case logFailde
+    case invalidURL
     
-    
-    var errorDescription: String? {
-        switch self {
-            
-        case .logFailde:
-            return "E-mail oder Password is falsch, bitte versuchen sie weiter!"
-        }
-    }
 }

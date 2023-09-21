@@ -28,6 +28,10 @@
 		4C20741D2AB9FC8C00E4FE12 /* CartRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20741C2AB9FC8C00E4FE12 /* CartRepository.swift */; };
 		4C20741F2ABA000D00E4FE12 /* PaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C20741E2ABA000D00E4FE12 /* PaymentView.swift */; };
 		4C2074212ABA774C00E4FE12 /* ErrorEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074202ABA774C00E4FE12 /* ErrorEnum.swift */; };
+		4C2074232ABADF2E00E4FE12 /* OrderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074222ABADF2E00E4FE12 /* OrderRepository.swift */; };
+		4C2074252ABAE00100E4FE12 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074242ABAE00100E4FE12 /* Order.swift */; };
+		4C2074272ABB1B8900E4FE12 /* AdressAutocompleteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074262ABB1B8900E4FE12 /* AdressAutocompleteRepository.swift */; };
+		4C2074292ABB1D9B00E4FE12 /* AdressAutoCompleteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2074282ABB1D9B00E4FE12 /* AdressAutoCompleteModel.swift */; };
 		4C2DD67D2AB05942006EF77C /* SliderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2DD67C2AB05942006EF77C /* SliderRepository.swift */; };
 		4C2DD67F2AB059E2006EF77C /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2DD67E2AB059E2006EF77C /* Slider.swift */; };
 		4C2DD6812AB05A54006EF77C /* SliderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2DD6802AB05A54006EF77C /* SliderViewModel.swift */; };
@@ -125,6 +129,11 @@
 		4C20741C2AB9FC8C00E4FE12 /* CartRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartRepository.swift; sourceTree = "<group>"; };
 		4C20741E2ABA000D00E4FE12 /* PaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentView.swift; sourceTree = "<group>"; };
 		4C2074202ABA774C00E4FE12 /* ErrorEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorEnum.swift; sourceTree = "<group>"; };
+		4C2074222ABADF2E00E4FE12 /* OrderRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderRepository.swift; sourceTree = "<group>"; };
+		4C2074242ABAE00100E4FE12 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		4C2074262ABB1B8900E4FE12 /* AdressAutocompleteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdressAutocompleteRepository.swift; sourceTree = "<group>"; };
+		4C2074282ABB1D9B00E4FE12 /* AdressAutoCompleteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdressAutoCompleteModel.swift; sourceTree = "<group>"; };
+		4C20742A2ABB4A8400E4FE12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		4C2DD67C2AB05942006EF77C /* SliderRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderRepository.swift; sourceTree = "<group>"; };
 		4C2DD67E2AB059E2006EF77C /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		4C2DD6802AB05A54006EF77C /* SliderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderViewModel.swift; sourceTree = "<group>"; };
@@ -323,6 +332,7 @@
 		4C3FFBF52A9CEB5A00D4CA6E /* BiarFoodiphone */ = {
 			isa = PBXGroup;
 			children = (
+				4C20742A2ABB4A8400E4FE12 /* Info.plist */,
 				4CB2BCC92AA0892D0002BD78 /* Service */,
 				4C3FFC432A9D070B00D4CA6E /* GoogleService-Info.plist */,
 				4C3FFC3C2A9D04C500D4CA6E /* Shared */,
@@ -371,6 +381,8 @@
 				4C2DD67C2AB05942006EF77C /* SliderRepository.swift */,
 				4C20741A2AB9FC7600E4FE12 /* FavoriteRepository.swift */,
 				4C20741C2AB9FC8C00E4FE12 /* CartRepository.swift */,
+				4C2074222ABADF2E00E4FE12 /* OrderRepository.swift */,
+				4C2074262ABB1B8900E4FE12 /* AdressAutocompleteRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -385,6 +397,8 @@
 				4C2DD6842AB09379006EF77C /* TableModel.swift */,
 				4C2074162AB9FC0800E4FE12 /* FavoriteModel.swift */,
 				4C2074182AB9FC1A00E4FE12 /* CartModel.swift */,
+				4C2074242ABAE00100E4FE12 /* Order.swift */,
+				4C2074282ABB1D9B00E4FE12 /* AdressAutoCompleteModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -643,7 +657,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					4C3FFBF22A9CEB5A00D4CA6E = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -751,6 +765,7 @@
 				4C7C51D52AAF5E4000DB17BD /* EnumBottomBar.swift in Sources */,
 				4CB2BCCB2AA089830002BD78 /* User.swift in Sources */,
 				4C3FFBF92A9CEB5A00D4CA6E /* ContentView.swift in Sources */,
+				4C2074232ABADF2E00E4FE12 /* OrderRepository.swift in Sources */,
 				4C7C51D32AAF5E1200DB17BD /* BottomBarView.swift in Sources */,
 				4CE7A0312A9DF3A1009ED1E0 /* responsiveView.swift in Sources */,
 				4C3FFBF72A9CEB5A00D4CA6E /* BiarFoodiphoneApp.swift in Sources */,
@@ -761,6 +776,8 @@
 				4C2073FB2AB9F7A100E4FE12 /* OrderView.swift in Sources */,
 				4C3FFC502A9D0EB100D4CA6E /* CategoriesView.swift in Sources */,
 				4C2073FD2AB9F7B500E4FE12 /* DeliveryTime.swift in Sources */,
+				4C2074252ABAE00100E4FE12 /* Order.swift in Sources */,
+				4C2074292ABB1D9B00E4FE12 /* AdressAutoCompleteModel.swift in Sources */,
 				4CE131022AB25E51005DF55D /* AuthenticationView.swift in Sources */,
 				4C2074192AB9FC1A00E4FE12 /* CartModel.swift in Sources */,
 				4C20741D2AB9FC8C00E4FE12 /* CartRepository.swift in Sources */,
@@ -771,6 +788,7 @@
 				4CB2BCCD2AA08B730002BD78 /* UserRepository.swift in Sources */,
 				4C3FFC392A9CF59200D4CA6E /* Category.swift in Sources */,
 				4C3FFC4B2A9D0AB600D4CA6E /* CategoryCell.swift in Sources */,
+				4C2074272ABB1B8900E4FE12 /* AdressAutocompleteRepository.swift in Sources */,
 				4C52BE342A9F8EE1008319F6 /* SliderView.swift in Sources */,
 				4C2073F42AB9F74000E4FE12 /* OrderAdressViewModel.swift in Sources */,
 				4C2073F12AB9F70C00E4FE12 /* ScreenTimeline.swift in Sources */,
@@ -850,6 +868,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -910,6 +929,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -939,6 +959,7 @@
 				DEVELOPMENT_TEAM = ST82B9K62G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BiarFoodiphone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -969,6 +990,7 @@
 				DEVELOPMENT_TEAM = ST82B9K62G;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = BiarFoodiphone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

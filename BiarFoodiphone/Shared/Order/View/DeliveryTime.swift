@@ -44,6 +44,6 @@ struct DeliveryTime: View {
 struct DeliveryTime_Previews: PreviewProvider {
     static var previews: some View {
         DeliveryTime()
-            .environmentObject(OrderViewModel())
+            .environmentObject(OrderViewModel(products: []))
     }
 }
