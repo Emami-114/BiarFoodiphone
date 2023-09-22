@@ -84,7 +84,7 @@ struct ProductCell: View {
                         }
                     }.padding(.horizontal,3)
                     if product.deposit {
-                        Text("zzgl.\(String(format: "%.2f", product.depositPrice))€ Pfand")
+                        Text("zzgl.\(String(format: "%.2f", product.depositPrice))€ \(Strings.deposit)")
                             .font(.system(size: 8))
                             .foregroundColor(Color.theme.subTextColor)
                             .padding(.horizontal,3)
@@ -200,20 +200,20 @@ struct ProductCell: View {
         .clipped()
         .shadow(color: Color.theme.subTextColor.opacity(0.15),radius: 5)
 
-        .alert(Text("Achtung"), isPresented: $showAlert, actions: {
+        .alert(Text(Strings.youAreNotLoggedIn), isPresented: $showAlert, actions: {
             HStack{
                 NavigationLink(destination: AuthenticationView().navigationBarBackButtonHidden(true)) {
-                    Text("Anmelden")
+                    Text(Strings.login)
                 }
                 Button(role: .cancel) {
                     showAlert = false
                 } label: {
-                    Text("Abbrechen")
+                    Text(Strings.cancel)
                 }
 
             }
         }, message: {
-            Text("Bevor sie Produkten im warenkorb anlegen, müssen sie sich anmelden")
+            Text(Strings.YouMustLogInBeforeAddingProductsToTheShoppingCart)
         })
         .onAppear{
             viewModel.fetchCartProductsId()

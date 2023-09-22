@@ -12,6 +12,8 @@ struct HomeView: View {
     @StateObject var sliderViewModel = SliderViewModel()
     @StateObject var categoriesViewModel = CategorieViewModel()
     @StateObject var productsViewModel = ProductsViewModel()
+    var props: Properties
+    var naviagtionToCart: () -> Void
     @State var selectedIndex = 0
     let time = Timer.publish(every: 5, on: .main, in: .default).autoconnect()
 
@@ -19,12 +21,12 @@ struct HomeView: View {
     var body: some View {
             
         NavigationStack{
-            responsiveView { props in
                 ZStack{
                     Color.theme.backgroundColor
                         .ignoresSafeArea(.all,edges: .all)
 
                     VStack{
+                        CustomNavBarView(showBackButton: false,title: "Home",trillingButtonAction: {}, backButtonAction: {})
                         SliderView(viewModel: sliderViewModel,selectedIndex: $selectedIndex)
                             .onReceive(time, perform: { _ in
                                 withAnimation(.default){
@@ -33,13 +35,13 @@ struct HomeView: View {
                                 
                             })
 
-                        CategoriesView()
+                        CategoriesView(navigationToCart: naviagtionToCart)
                             .environmentObject(categoriesViewModel)
                             .environmentObject(productsViewModel)
                         Spacer()
                     }
                 }
-            }
+            
         }
 
     }
@@ -47,6 +49,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(sidbarShowing: .constant(false))
+        HomeView(sidbarShowing: .constant(false), props: .init(isLandscape: false, isIpad: false, size: CGSize(), isIphone: true), naviagtionToCart: {})
     }
 }

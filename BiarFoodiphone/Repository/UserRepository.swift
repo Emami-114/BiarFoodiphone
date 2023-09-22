@@ -13,6 +13,7 @@ import FirebaseFirestoreSwift
 class UserRepository {
  static let shared = UserRepository()
     var userIsLoggedIn = CurrentValueSubject<Bool,Never>(false)
+    var authError = CurrentValueSubject<String?,Never>(nil)
     var user = CurrentValueSubject<User?,Never>(nil)
     
     init(){
@@ -25,7 +26,6 @@ extension UserRepository {
     
     private func checkAuth() {
         guard let currentUser =  FirebaseManager.shared.auth.currentUser else {
-            print("Nicht angemeldet")
             return
         }
         
@@ -39,6 +39,7 @@ extension UserRepository {
         FirebaseManager.shared.auth.signIn(withEmail: email, password: password){authResult,error in
             if let error = error {
                 print("Fehler beim Anmelden:",error.localizedDescription)
+                self.authError.send(Strings.loginFailed)
                 return
             }
             guard let authResult, let _ = authResult.user.email else { return }
@@ -57,6 +58,7 @@ extension UserRepository {
         FirebaseManager.shared.auth.createUser(withEmail: email, password: password){authResult, error in
             if let error = error {
                 print("Fehler beim Registrieren: \(error.localizedDescription)")
+                self.authError.send(Strings.RegistrationFailed)
                 return
             }
             guard let authResult, let email = authResult.user.email else {return}

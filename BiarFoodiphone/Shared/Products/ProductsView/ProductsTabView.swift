@@ -18,7 +18,7 @@ struct ProductsTabView: View {
         }
         TabView(selection: $productViewModel.selectedCategorie) {
             ForEach(mainCategories,id: \.id) { category in
-                    ProductsView(categorieId: categorieId).tag(category.id ?? "")
+                ProductsView(navigationToCart: {}, categorieId: categorieId).tag(category.id ?? "")
                    
             }
         }.tabViewStyle(.page)

@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct SidebarView: View {
-    @State var currentTab : String = ""
     @EnvironmentObject var viewModel : SidbarViewModel
     @EnvironmentObject var userViewModel: UserViewModel
     @Namespace var animation
     @Binding var isShowing: Bool
-   
     var body: some View{
         VStack(alignment: .leading,spacing: 10){
             headerSidbarView()
@@ -34,12 +32,11 @@ struct SidebarView: View {
                 }
             }
            
-            
             HStack{
                 Button{
                     userViewModel.logOut()
                 }label:{
-                    Label("Abmelden", systemImage: "rectangle.portrait.and.arrow.right")
+                    Label(Strings.logOut, systemImage: "rectangle.portrait.and.arrow.right")
                         .foregroundColor(Color.theme.white)
                         .font(.title3.bold())
                 }.padding(.horizontal)
@@ -57,13 +54,12 @@ struct SidebarView: View {
         .frame(maxWidth: .infinity)
         .background{
             Color.theme.linearGradient.ignoresSafeArea(.all,edges: .all)
-
         }
     }
     @ViewBuilder
     func headerSidbarView() -> some View{
                     HStack{
-                        Image("IconImage")
+                        Image(.iconimage)
                             .resizable()
                             .clipShape(Circle())
                             .padding(5)
@@ -90,6 +86,8 @@ struct SidebarView: View {
                     }.padding(.horizontal,20)
                         .padding(.trailing,5)
                         .padding(.bottom)
+        
+        
     }
 }
 

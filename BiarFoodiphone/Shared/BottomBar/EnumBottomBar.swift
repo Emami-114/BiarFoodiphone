@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 enum BottomBar: String,CaseIterable {
     case home
-    case search,cart,favorite,account
+    case search,cart,favorite
     
     var title: String{
         switch self {
@@ -20,8 +20,7 @@ enum BottomBar: String,CaseIterable {
                 return "Warenkorb"
         case .favorite:
             return "Favoriten"
-        case .account:
-            return "Konto"
+    
         }
     }
     
@@ -35,8 +34,6 @@ enum BottomBar: String,CaseIterable {
             return "cart"
         case .favorite:
             return "heart"
-        case .account:
-            return "person.fill"
         }
     }
 

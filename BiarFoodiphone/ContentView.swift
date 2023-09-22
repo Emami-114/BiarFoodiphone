@@ -15,14 +15,14 @@ struct ContentView: View {
     @EnvironmentObject var userViewModel: UserViewModel
 
     var body: some View {
-            responsiveView { props in
+        responsiveView{ props in
 //                NavigationStack{
                 if !(props.isIpad || props.isLandscape){
                         if isShowingSidebar {
                                     SidebarView(isShowing: $isShowingSidebar)
                         }
                     if sidbarViewModel.currentItem == nil{
-                        BottomBarView(showSiderBar: $isShowingSidebar)
+                        BottomBarView(props: props, showSiderBar: $isShowingSidebar)
                             .cornerRadius(isShowingSidebar ? 40 : 0)
                             .padding(isShowingSidebar ? 20 : 0)
                             .background(isShowingSidebar ? Color.theme.white.opacity(0.2) : .clear)
@@ -39,14 +39,13 @@ struct ContentView: View {
                         sidbarViewModel.view
                     }
                            
-                               
                     }else{
                         NavigationSplitView(columnVisibility: $navigationShow, sidebar: {
                             SidebarView(isShowing: $isShowingSidebar)
 //                                .environmentObject(sidbarViewModel)
 
                         }, detail: {
-                            HomeView(sidbarShowing: $isShowingSidebar)
+                            HomeView(sidbarShowing: $isShowingSidebar, props: props, naviagtionToCart: {})
 
                         }).navigationSplitViewStyle(.balanced)
                             
@@ -57,7 +56,6 @@ struct ContentView: View {
             }.background(Color.theme.backgroundColor)
 
             .environmentObject(sidbarViewModel)
-
     }
 }
 

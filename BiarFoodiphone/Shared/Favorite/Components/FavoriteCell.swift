@@ -1,15 +1,14 @@
 //
-//  CartItem.swift
+//  FavoriteCell.swift
 //  BiarFoodiphone
 //
-//  Created by Ecc on 15/09/2023.
+//  Created by Ecc on 21/09/2023.
 //
 
 import SwiftUI
 import Kingfisher
-struct CartItem: View {
+struct FavoriteCell: View {
     let product : Product
-    @EnvironmentObject var viewModel : CartViewModel
     var body: some View {
         HStack{
             ZStack(alignment: .bottom){
@@ -41,11 +40,12 @@ struct CartItem: View {
                 }
             }
             VStack(alignment: .leading){
-                Text(product.title)
-                    .foregroundColor(Color.theme.blackColor)
-                    .font(.subheadline)
-                    .lineLimit(2)
-                    .padding(.horizontal,3)
+                    Text(product.title)
+                        .foregroundColor(Color.theme.blackColor)
+                        .font(.subheadline)
+                        .lineLimit(2)
+                        .padding(.horizontal,3)
+                
                 if !product.netFillingQuantity.isEmpty{
                     HStack(spacing: 2){
                         Text(product.netFillingQuantity)
@@ -77,51 +77,7 @@ struct CartItem: View {
                     Spacer()
                 }
             }
-            
-            VStack(spacing: 5){
-                Button{
-                    viewModel.quantityPlus(with: product.id ?? "")
-                }label: {
-                    Image(systemName: "plus")
-                        .font(.footnote)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.theme.white)
-                        .padding(.top,10)
-
-                }.frame(height: 22,alignment: .center)
-
-                
-               
-
-                let productCount = viewModel.cartProductsId.filter { proId in
-                    proId.productId == product.id ?? ""
-                }.first
-                
-                Text(String(productCount?.quantity ?? 1))
-                    .font(.footnote)
-                    .fontWeight(.bold)
-                    .frame(width: 25,height: 25)
-                    .background(Rectangle().fill(Color.theme.white))
-
-                Button{
-                    viewModel.quantityminus(with: product.id ?? "")
-                }label: {
-                    Image(systemName: "minus")
-                        .font(.footnote)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.theme.white)
-                        .padding(.bottom,10)
-                        
-                }.frame(height: 22,alignment: .center)
-                  
-            }.frame(width: 25,height: 70,alignment: .center)
-                
-                .background(RoundedRectangle(cornerRadius: 5).fill(Color.theme.greenColor))
-                .padding(.trailing,5)
-                .shadow(color: Color.theme.subTextColor.opacity(0.24),radius: 4)
         }
-         
-        
         .frame(maxHeight: 100)
         .background(Color.theme.white)
         .overlay(content: {
@@ -131,13 +87,9 @@ struct CartItem: View {
         .clipped()
         .shadow(color: Color.theme.subTextColor.opacity(0.15),radius: 5)
         .padding(.horizontal)
-        
     }
 }
 
-struct CartItem_Previews: PreviewProvider {
-    static var previews: some View {
-        CartItem(product: productExample)
-            .environmentObject(CartViewModel())
-    }
+#Preview {
+    FavoriteCell(product: productExample)
 }

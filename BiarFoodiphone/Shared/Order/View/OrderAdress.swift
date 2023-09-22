@@ -65,7 +65,7 @@ struct OrderAdress: View {
                     showAdressDetail = true
 
                 }label: {
-                    Text("Neue Adresse angeben")
+                    Text(Strings.provideAnewAddress)
                 }
                 
             }
@@ -81,38 +81,36 @@ struct OrderAdress: View {
     func EditOrderAdresse() -> some View {
         VStack{
             HStack(spacing: 5){
-                TextField("Vorname", text: $viewModel.firstName2)
+                TextField(Strings.firstName, text: $viewModel.firstName2)
                     .DefaultTextFieldModifier(paddingHorizontal: 0)
-                TextField("Nachname", text: $viewModel.lastName2)
+                TextField(Strings.lastName, text: $viewModel.lastName2)
                     .DefaultTextFieldModifier(paddingHorizontal: 0)
             }.padding(.horizontal)
             HStack{
-                TextField("Straße", text: $viewModel.street2)
+                TextField(Strings.street, text: $viewModel.street2)
                     .DefaultTextFieldModifier(paddingHorizontal: 0)
                     .focused($adressFieldFocused)
-                TextField("Hausenummer", text: $viewModel.houseNumber2)
+                TextField(Strings.houseNumber, text: $viewModel.houseNumber2)
                     .DefaultTextFieldModifier(paddingHorizontal: 0)
             }.padding(.horizontal)
             if !viewModel.adressResult.isEmpty && adressFieldFocused{
                 adresseCompletet
             }else{
                 HStack{
-                    TextField("PLZ", text: $viewModel.zipCode2)
+                    TextField(Strings.plz, text: $viewModel.zipCode2)
                         .DefaultTextFieldModifier(paddingHorizontal: 0)
-                    TextField("Stadt", text: $viewModel.city2)
+                    TextField(Strings.city, text: $viewModel.city2)
                         .DefaultTextFieldModifier(paddingHorizontal: 0)
                 }.padding(.horizontal)
-                TextField("Handynummer", text: $viewModel.phoneNumber2)
+                TextField(Strings.mobilePhoneNumber, text: $viewModel.phoneNumber2)
                     .DefaultTextFieldModifier(paddingHorizontal: 15)
             }
 
-           
-          
             HStack(spacing: 20){
                 Button{
                     showAdressDetail = false
                 }label: {
-                    Text("Abbrechen")
+                    Text(Strings.cancel)
                         .foregroundColor(Color.theme.iconColor)
 
                 }
@@ -131,7 +129,7 @@ struct OrderAdress: View {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: .white))
                     }else{
-                        Text("Speicher")
+                        Text(Strings.save)
                             .foregroundColor(Color.theme.white)
                     }
                   

@@ -17,11 +17,8 @@ struct BiarFoodiphoneApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            SignUpView()
             ContentView()
                 .environmentObject(userViewModel)
-            
-//            ViewTest()
         }
     }
     

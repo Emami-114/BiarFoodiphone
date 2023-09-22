@@ -14,6 +14,7 @@ class FavoriteRepository {
     static let shared = FavoriteRepository()
     var listener: ListenerRegistration?
     var favoriteproducts = CurrentValueSubject<[FavoriteModel],Never>([])
+    var products = CurrentValueSubject<[Product],Never>([])
     var singleFavoriteproduct = CurrentValueSubject<FavoriteModel?,Never>(nil)
 
 }
@@ -58,7 +59,7 @@ extension FavoriteRepository {
     }
     
     
-    func fetchUserFavorite() async throws{
+    func fetchUserFavorite(){
         guard let userId = FirebaseManager.shared.userId else { return }
         self.listener = FirebaseManager.shared.database.collection("users").document(userId).collection("favorit")
             .addSnapshotListener({ querySnapshot, error in
@@ -66,12 +67,10 @@ extension FavoriteRepository {
                     print(error.localizedDescription)
                     return
                 }
-                
                 guard let documents = querySnapshot?.documents else {
                     print("Fehler beim Laden der Favorit produkten")
                     return
                 }
-                
                 let products = documents.compactMap { queryDocument -> FavoriteModel? in
                     return try? queryDocument.data(as: FavoriteModel.self)
                 }
@@ -88,6 +87,30 @@ extension FavoriteRepository {
     func removeListener() {
         self.favoriteproducts.send([])
         self.listener?.remove()
+    }
+    
+    
+    func fetchFavoriteProducts(productsId: [String]){
+        FirebaseManager.shared.database.collection("produkten")
+            .whereField("isPublic", isEqualTo: true)
+            .whereField("productId", in: productsId)
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                guard let document = querySnapshot?.documents else {
+                    print("Fehler beim laden Produkten")
+                    return
+                }
+                
+                let products = document.compactMap { queryDocumentSnapshot -> Product? in
+                    let product = try? queryDocumentSnapshot.data(as: Product.self)
+                    return product
+                }
+                self.products.send(products)
+                
+            }
     }
 }
 

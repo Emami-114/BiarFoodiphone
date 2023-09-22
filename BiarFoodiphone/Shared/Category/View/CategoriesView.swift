@@ -10,6 +10,7 @@ import SwiftUI
 struct CategoriesView: View {
     @EnvironmentObject var viewModel : CategorieViewModel
     @EnvironmentObject var productViewModel : ProductsViewModel
+    var navigationToCart: () -> Void
     var body: some View {
         responsiveView { props in
             ScrollView(.vertical,showsIndicators: false) {
@@ -18,13 +19,14 @@ struct CategoriesView: View {
                         category.type == "Main"
                     }),id: \.id){category in
                         NavigationLink(destination:
-                                ProductsView(categorieId: category.id ?? "")
+                                        ProductsView(navigationToCart: navigationToCart, categorieId: category.id ?? "")
                             .environmentObject(productViewModel)
                             .environmentObject(viewModel)
                         ) {
                             CategoryCell(category: category)
                                 
                         }.foregroundColor(.black)
+                            .navigationBarBackButtonHidden(true)
                     }
                 }
                 
@@ -37,7 +39,7 @@ struct CategoriesView: View {
 
 struct CategoriesListView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriesView()
+        CategoriesView( navigationToCart: {})
             .environmentObject(CategorieViewModel())
             .environmentObject(ProductsViewModel())
     }

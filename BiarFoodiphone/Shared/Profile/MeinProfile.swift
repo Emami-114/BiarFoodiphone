@@ -9,24 +9,24 @@ import SwiftUI
 
 struct MeinProfile: View {
     @StateObject private var viewModel = MeinProfileViewModel()
-    @State private var salutation = ["Keine Auswahl","Herr","Frau"]
+    @State private var salutation = [Strings.noSelection,Strings.mr,Strings.mrs_ms]
      var dismiss: () -> Void
     var body: some View {
             Form{
-                Picker("Anrede", selection: $viewModel.salutation) {
+                Picker(Strings.salutation, selection: $viewModel.salutation) {
                     ForEach(salutation,id: \.self) { salou in
                         Text(salou).tag(salou)
                     }
                 }
                 Section("Name") {
-                    TextField("Vorname", text: $viewModel.firstName)
-                    TextField("Nachname", text: $viewModel.lastName)
+                    TextField(Strings.firstName, text: $viewModel.firstName)
+                    TextField(Strings.lastName, text: $viewModel.lastName)
                 }
                 Section("E-Mail") {
-                    TextField("E-mail", text: $viewModel.email)
+                    TextField(Strings.emailAddress, text: $viewModel.email)
                 }
                 Section("Handynummer") {
-                    TextField("Handynummer", text: $viewModel.phoneNumber)
+                    TextField(Strings.mobilePhoneNumber, text: $viewModel.phoneNumber)
                 }
                 Section("Adresse") {
                     TextField("Straße", text: $viewModel.street)

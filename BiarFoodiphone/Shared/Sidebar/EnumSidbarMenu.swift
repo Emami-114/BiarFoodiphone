@@ -13,5 +13,4 @@ case notifications
 case help
 case privacy
 case imprint
-    
 }

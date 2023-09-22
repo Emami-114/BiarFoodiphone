@@ -1,13 +1,13 @@
 //
-//  BottomBarIcon.swift
+//  BottomBarIconWithCounter.swift
 //  BiarFoodiphone
 //
-//  Created by Ecc on 11/09/2023.
+//  Created by Ecc on 21/09/2023.
 //
 
 import SwiftUI
 
-struct BottomBarIcon: View {
+struct BottomBarIconWithCounter: View {
     let icon: String
     let title: String
      var action : () -> Void
@@ -22,11 +22,10 @@ struct BottomBarIcon: View {
             }
         }label: {
             HStack{
-                if isCart{
-                    if title == viewModel.currentItem.title{
+                    if title == viewModel.currentItem.title {
                         Text(title)
                     }
-                    Image(systemName: "cart")
+                    Image(systemName: icon)
                         .overlay(alignment: .topTrailing) {
                             if cartCount > 0 {
                                 Text(String(cartCount))
@@ -37,14 +36,6 @@ struct BottomBarIcon: View {
                                     .offset(x: 5,y: -9)
                             }
                         }
-                   
-                }else {
-                    Image(systemName: icon)
-                    if title == viewModel.currentItem.title{
-                        Text(title)
-                    }
-                }
-
             }
             .foregroundColor(title == viewModel.currentItem.title ? .white : .black)
                 .padding()
@@ -61,12 +52,5 @@ struct BottomBarIcon: View {
         }
         .animation(.spring(), value: self.title)
 
-    }
-}
-
-struct BottomBarIcon_Previews: PreviewProvider {
-    static var previews: some View {
-        BottomBarIcon(icon: "house.fill", title: "Home", action: {}, cartCount: .constant(10), nameSpace: Namespace().wrappedValue)
-            .environmentObject(BottomBarViewModel())
     }
 }

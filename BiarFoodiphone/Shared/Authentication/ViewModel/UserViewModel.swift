@@ -25,7 +25,7 @@ class UserViewModel: ObservableObject {
     @Published var houseNumBer : String = ""
     @Published var zipCode : String = ""
     @Published var email: String = ""
-    
+
     init() {
         userRepository.userIsLoggedIn
             .sink{ self.userIsLogged = $0 }
@@ -44,26 +44,20 @@ class UserViewModel: ObservableObject {
                 self.email = user.zipCode
             }
             .store(in: &cancellables)
-    }
+        
     
+    }
     
      var viewChangeSignUp : AuthViewEnum {
         if self.currentAuthView == .signUp{
             return .signIn
-        }else{
+        }else if self.currentAuthView == .forgotPassword{
+            return .signIn
+        }else {
             return .signUp
         }
     }
-    var viewChangeForgot : AuthViewEnum {
-       if self.currentAuthView == .forgotPassword{
-           return .signIn
-       }else{
-           return .forgotPassword
-       }
-   }
-    
-    
-    
+  
     func logOut(){
         userRepository.logOut()
         favoriteRepository.removeListener()
@@ -72,8 +66,20 @@ class UserViewModel: ObservableObject {
         cartRepository.cartProductsId.send([])
     }
     
+    var view: AnyView {
+        switch currentAuthView{
+        case .signIn:
+            return AnyView(SignInView(action: {
+                self.currentAuthView = .forgotPassword
+            }))
+        case .signUp:
+            return AnyView(SignUpView())
+        case .forgotPassword:
+            return AnyView(ForgotPassword(action: {}))
+        }
+    }
+    
 }
-
 
 enum AuthViewEnum: String,CaseIterable{
     case signIn,signUp,forgotPassword
@@ -89,14 +95,5 @@ enum AuthViewEnum: String,CaseIterable{
         }
     }
     
-    var view: AnyView {
-        switch self{
-        case .signIn:
-           return AnyView(SignInView())
-        case .signUp:
-            return AnyView(SignUpView())
-        case .forgotPassword:
-            return AnyView(Text("wewfwef"))
-        }
-    }
+  
 }

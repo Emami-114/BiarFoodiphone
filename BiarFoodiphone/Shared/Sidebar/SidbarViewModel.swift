@@ -33,12 +33,12 @@ class SidbarViewModel : ObservableObject{
     
     func switchItemTitle(item: EnumSidbarMenu) -> String{
             switch item {
-            case .account : return self.userIsLoggedIn ? "Konto" : "Anmelden"
-            case .order : return "Bestellungen"
-            case .notifications: return "Push"
-            case .help : return "Hilfe"
-            case .privacy : return "Datenschutz"
-            case .imprint : return "Impressum"
+            case .account : return self.userIsLoggedIn ? Strings.account : Strings.login
+            case .order : return Strings.orders
+            case .notifications: return Strings.notification
+            case .help : return Strings.help
+            case .privacy : return Strings.dataProtection
+            case .imprint : return Strings.imprint
             }
    
     }

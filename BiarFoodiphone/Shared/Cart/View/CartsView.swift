@@ -13,76 +13,60 @@ struct CartsView: View {
     var body: some View {
         NavigationStack{
         ZStack{
-            Color.theme.backgroundColor.ignoresSafeArea(.all,edges: .all)
-        
+            Color.theme.backgroundColor
+                .ignoresSafeArea(.all,edges: .all)
                 VStack{
+                    CustomNavBarView(showBackButton: false,title: Strings.shoppingCart, trillingButtonAction: {}, backButtonAction: {})
                     if viewModel.cartProducts.isEmpty{
                         Spacer()
-                        VStack{
-                            Image(systemName: "cart.badge.questionmark")
-                                .resizable()
-                                .frame(width: 200,height: 200)
-                                Text("Warenkorb ist leer")
-                                .font(.title)
-                                .fontWeight(.semibold)
-                        }.padding(30)
-                            .foregroundColor(Color.theme.iconColor)
-
-                        .frame(width: 300,height: 400)
-                        .background(RoundedRectangle(cornerRadius: 30).fill(.thinMaterial))
+                       CartEmpty
                         Spacer()
                     }else {
                         ScrollView{
                             LazyVStack {
                                 ForEach(viewModel.cartProducts,id: \.id) { product in
-                                    
                                     NavigationLink(destination: ProductsDetail(product: product)) {
                                         CartItem(product: product)
+                                        
                                         .environmentObject(viewModel)
-                                        .navigationBarHidden(true)
-                                        .navigationBarBackButtonHidden(true)
-                                    }.buttonStyle(.plain)
-                                    .navigationViewStyle(StackNavigationViewStyle())
-                                    
-                                        .swipeActions {
-                                            Button(role: .destructive) {
-                                            } label: {
-                                                Label("Löschen", systemImage: "trash")
-                                            }
-                                        }
-                                }
-                               
+                                      
+                                    }
+                                    .buttonStyle(.plain)
+                                       
+                                } 
                             }
-                            TotalPriceView()
-                           
+                            TotalPriceView
                         }
-                    
                     }
+                    Spacer()
                 }
-                
-
             }
         }
-            
-            .navigationViewStyle(StackNavigationViewStyle())
-            .toolbar(content: {
-                ToolbarItem {
-                    EditButton()
-                    
-                }
-            })
             .onAppear{
                 viewModel.fetchCartProductsId()
                 viewModel.fetchCartProducts()
             }
     }
+    private var CartEmpty: some View{
+        VStack{
+            Image(systemName: "cart.badge.questionmark")
+                .resizable()
+                .frame(width: 180,height: 180)
+            Text(Strings.shoppingCartIsEmpty)
+                .font(.title)
+                .fontWeight(.semibold)
+        }.padding(30)
+            .foregroundColor(Color.theme.iconColor)
+
+        .frame(width: 350,height: 350)
+        .background(RoundedRectangle(cornerRadius: 30).fill(.thinMaterial))
+    }
     
-    @ViewBuilder
-    func TotalPriceView() -> some View {
+    private var TotalPriceView: some View {
         VStack{
             if viewModel.salePrice() > 0{
                 HStack{
-                    Text("Gespart")
+                    Text(Strings.saved)
                     Spacer()
                     Text("-\(PriceReplacing(price: viewModel.salePrice()))€")
                 }.font(.footnote.bold())
@@ -92,7 +76,7 @@ struct CartsView: View {
             }
             if viewModel.depositPrice() > 0 {
                 HStack{
-                    Text("Pfand")
+                    Text(Strings.deposit)
                     Spacer()
                     Text("\(PriceReplacing(price: viewModel.depositPrice()))€")
                 }.font(.footnote.bold())
@@ -103,10 +87,10 @@ struct CartsView: View {
 
             HStack{
                 HStack(alignment: .bottom, spacing: 5){
-                    Text("Gesamtbetrag")
+                    Text(Strings.totalAmount)
                         .font(.subheadline.bold())
                         .foregroundColor(Color.theme.iconColor)
-                    Text("(Inkl.MwSt.)")
+                    Text(Strings.Incl_VAT)
                         .font(.caption2)
                         .foregroundColor(Color.theme.subTextColor)
                 }
@@ -117,7 +101,7 @@ struct CartsView: View {
             .padding(.horizontal,25)
             
             NavigationLink(destination: OrderView(products: viewModel.ordrProducts())){
-                Text("Zur Kasse")
+                Text(Strings.checkout)
             
                 .font(.title3.bold())
                 .foregroundColor(Color.theme.white)
@@ -125,11 +109,8 @@ struct CartsView: View {
                 .background(RoundedRectangle(cornerRadius: 10).fill(Color.theme.greenColor))
             } .padding(.top)
                 .padding(.bottom,80)
-            
-           
-
+ 
         }.padding(.top)
-        
         
     }
     
@@ -137,7 +118,10 @@ struct CartsView: View {
 
 struct CartsView_Previews: PreviewProvider {
     static var previews: some View {
-        CartsView()
+        Group{
+            CartsView()
+                .environment(\.locale,Locale.init(identifier: "de"))
 
+        }
     }
 }

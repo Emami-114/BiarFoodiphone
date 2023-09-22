@@ -78,54 +78,35 @@ class CartViewModel: ObservableObject {
         return orderproducts
     }
     
-    
-    
-    
-    func depositPrice() -> Double{
-        var totalDepositPrice = 0.0
-        for i in cartProductsId{
-         let product = cartProducts.filter { product in
-                product.id == i.productId
-         }.first
-            if product?.deposit ?? false{
-                let depositPreise = product?.depositPrice ?? 0.0
-                totalDepositPrice = totalDepositPrice + depositPreise  * Double(i.quantity)
+    func depositPrice() -> Double {
+        return cartProductsId.reduce(0.0) { total, cartProduct in
+            guard let product = cartProducts.first(where: { $0.id == cartProduct.productId }), product.deposit else {
+                return total
             }
+            return total + (product.depositPrice) * Double(cartProduct.quantity)
         }
-        return totalDepositPrice
-    }
-    
-    func salePrice() -> Double{
-        var totalSalePrice = 0.0
-        for i in cartProductsId{
-         let product = cartProducts.filter { product in
-                product.id == i.productId
-         }.first
-            if product?.sale ?? false{
-                let salePrice = (product?.price ?? 0.0) - (product?.salePrice ?? 0.0)
-                totalSalePrice = totalSalePrice + salePrice * Double(i.quantity)
-            }
-        }
-        return totalSalePrice
-    }
-    
-    
-    func totalPrice() -> Double{
-        var totalprice = 0.0
-        for i in cartProductsId{
-         let product = cartProducts.filter { product in
-                product.id == i.productId
-         }.first
-            let totalproductprice = (product?.price ?? 0.0) * Double(i.quantity)
-            totalprice = totalprice + (totalproductprice - salePrice()) + depositPrice()
-        }
-        return totalprice
     }
 
-    
-    
-    
-    
+    func salePrice() -> Double {
+        return cartProductsId.reduce(0.0) { total, cartProduct in
+            guard let product = cartProducts.first(where: { $0.id == cartProduct.productId }), product.sale else {
+                return total
+            }
+            let salePrice = (product.price ) - (product.salePrice )
+            return total + salePrice * Double(cartProduct.quantity)
+        }
+    }
+
+    func totalPrice() -> Double {
+        return cartProductsId.reduce(0.0) { total, cartProduct in
+            guard let product = cartProducts.first(where: { $0.id == cartProduct.productId }) else {
+                return total
+            }
+            let totalProductPrice = (product.price ) * Double(cartProduct.quantity)
+            return total + (totalProductPrice - salePrice()) + depositPrice()
+        }
+    }
+
     
     func quantityPlus(with id: String){
         let productCount = cartProductsId.filter { proId in
@@ -155,8 +136,11 @@ class CartViewModel: ObservableObject {
         
     }
     
-    func deleteCartProduct(with id: String){
-        cartRepo.deleteCartProduct(with: id)
+    func deleteCartProduct(at offsets: IndexSet){
+          offsets.map { cartProductsId[$0] }.forEach { productId in
+               let productId = productId.productId
+              cartRepo.deleteCartProduct(with: productId)
+        }
     }
     
 }

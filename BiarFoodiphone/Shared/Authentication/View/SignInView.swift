@@ -10,9 +10,11 @@ import SwiftUI
 struct SignInView: View {
     @StateObject var viewModel = SigninViewModel()
     @EnvironmentObject var sidbarViewModel: SidbarViewModel
-
+    @State var showAlert = false
     @FocusState private var focusStateField
     @State var showPassword: Bool = false
+    var action: () -> Void
+  
     var body: some View {
         VStack(spacing: 20){
             VStack{
@@ -33,6 +35,9 @@ struct SignInView: View {
                 }else{
                     SecureField("Password(mind. 6 Zeichen)", text: $viewModel.password,prompt: Text("Password(mind. 6 Zeichen)").foregroundColor(Color.theme.subTextColor.opacity(0.5)))
                 }
+                
+                
+                
                 Button{
                     self.showPassword.toggle()
                 }label: {
@@ -40,12 +45,19 @@ struct SignInView: View {
                 }
             }.DefaultTextFieldModifier(paddingHorizontal: 40)
 
-        
+            Button{
+                action()
+            }label: {
+                Text("Password vergessen?")
+            }
+            
             
             Button{
+                if !viewModel.userIsLogged{
                     viewModel.login()
+                }else {
                     sidbarViewModel.currentItem = nil
-               
+                }
             }label: {
                 if viewModel.loading{
                     ProgressView()
@@ -68,13 +80,26 @@ struct SignInView: View {
             
         }.offset(x: 30)
             .rotation3DEffect(Angle(degrees: 5), axis: (x: 0, y: 0, z: -3))
+        
+            .alert("Error", isPresented: $viewModel.showAlert) {
+                Button(role: .cancel) {
+                    viewModel.errorRemove()
+                } label: {
+                    Text("Ok")
+                }
+
+            } message: {
+                Text(viewModel.error ?? "")
+            }
+        
+           
 
     }
 }
 
 struct SignInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInView()
+        SignInView(action: {})
             .environmentObject(SidbarViewModel())
     }
 }

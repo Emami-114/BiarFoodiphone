@@ -19,7 +19,6 @@ struct OrderView: View {
                 .ignoresSafeArea(.all,edges: .all)
             VStack(spacing: 20){
             ScreenTimeline()
-                
                 viewModel.view
                     .padding(.top)
                 Spacer()
@@ -36,7 +35,7 @@ struct OrderView: View {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle(tint: Color.theme.white))
                     }else{
-                        Text(viewModel.currentView == .payment ? "Bezahlen" : "Nächste")
+                        Text(viewModel.currentView == .payment ? Strings.pay : Strings.next)
                             .font(.title2)
                             .foregroundColor(Color.theme.white)
                     }

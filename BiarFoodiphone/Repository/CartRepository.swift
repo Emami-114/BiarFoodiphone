@@ -16,9 +16,7 @@ class CartRepository {
     static let shared = CartRepository()
     var listener: ListenerRegistration?
     var cartProductsId = CurrentValueSubject<[CartModel],Never>([])
-//    var singleCartProductId = CurrentValueSubject<CartModel?,Never>(nil)
     var cartProducts = CurrentValueSubject<[Product],Never>([])
-
 }
 
 extension CartRepository {
@@ -34,7 +32,6 @@ extension CartRepository {
         }
     }
     
-    
     func updateCardProductId(productId: String,quantity: Int) {
         guard let userId = FirebaseManager.shared.userId else { return }
         let product = ["quantity": quantity]
@@ -45,7 +42,6 @@ extension CartRepository {
             }
         }
     }
-    
     
     func fetchCartProductId(){
         guard let userId = FirebaseManager.shared.userId else { return }
@@ -67,19 +63,13 @@ extension CartRepository {
                 self.cartProductsId.send(productsId)
             })
     }
-    
-    
-    
-    
+
     func deleteCartProduct(with id: String){
         guard let userId = FirebaseManager.shared.userId else { return }
         FirebaseManager.shared.database.collection("users").document(userId).collection("cart")
             .document(id).delete()
     }
-    
-    
 
-    
     func removeListener() {
         self.cartProducts.send([])
         self.listener?.remove()
