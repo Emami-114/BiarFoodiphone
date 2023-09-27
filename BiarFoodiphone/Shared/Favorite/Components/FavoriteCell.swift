@@ -9,6 +9,7 @@ import SwiftUI
 import Kingfisher
 struct FavoriteCell: View {
     let product : Product
+    var action: () -> Void
     var body: some View {
         HStack{
             ZStack(alignment: .bottom){
@@ -77,6 +78,12 @@ struct FavoriteCell: View {
                     Spacer()
                 }
             }
+            Button{
+                action()
+            }label: {
+                Image(systemName: "trash")
+            }.foregroundColor(.red)
+                .padding(.trailing,10)
         }
         .frame(maxHeight: 100)
         .background(Color.theme.white)
@@ -91,5 +98,5 @@ struct FavoriteCell: View {
 }
 
 #Preview {
-    FavoriteCell(product: productExample)
+    FavoriteCell(product: productExample, action: {})
 }

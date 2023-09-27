@@ -44,7 +44,11 @@ class ProductsViewModel: ObservableObject {
     
     
     func fetchProducts(){
-        productsRepository.fetchProducts(withCategories: selectedCategorie)
+        DispatchQueue.main.async {
+            Task{
+                self.productsRepository.fetchProducts(withCategories: self.selectedCategorie)
+            }
+        }
 
     }
     

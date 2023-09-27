@@ -60,6 +60,9 @@ struct Strings{
     static let favoritSeit = NSLocalizedString("favoritSeit", comment: "")
     static let shoppingCart = NSLocalizedString("shoppingCart", comment: "")
     static let products = NSLocalizedString("products", comment: "")
+    static let home = NSLocalizedString("home", comment: "")
+    static let search = NSLocalizedString("search", comment: "")
+    static let addToCart = NSLocalizedString("addToCart", comment: "")
     
     
 

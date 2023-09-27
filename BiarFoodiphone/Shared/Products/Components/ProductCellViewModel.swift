@@ -31,7 +31,6 @@ class ProductCellViewModel: ObservableObject {
       cartProductId.contains(where: { proId in
             proId.productId == productId
         })
-        
     }
     func quantityPlus(with id: String){
         

@@ -68,6 +68,8 @@
 		4C567F9F2AB0FCAB00516B52 /* GetPercentag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C567F9E2AB0FCAB00516B52 /* GetPercentag.swift */; };
 		4C58BB372ABD981D00BB3298 /* CustomNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C58BB362ABD981D00BB3298 /* CustomNavBarView.swift */; };
 		4C58BB392ABD997400BB3298 /* CustomNavBarProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C58BB382ABD997400BB3298 /* CustomNavBarProducts.swift */; };
+		4C58BB3F2ABDB34D00BB3298 /* SiderbarIpadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C58BB3E2ABDB34D00BB3298 /* SiderbarIpadView.swift */; };
+		4C58BB462ABDE56700BB3298 /* SiderbarIpadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C58BB452ABDE56700BB3298 /* SiderbarIpadViewModel.swift */; };
 		4C5A0EC72AA356BD00378E4B /* ProductsDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A0EC62AA356BD00378E4B /* ProductsDetail.swift */; };
 		4C5A0EC92AA3781400378E4B /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5A0EC82AA3781400378E4B /* DetailViewModel.swift */; };
 		4C7C51D32AAF5E1200DB17BD /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C51D22AAF5E1200DB17BD /* BottomBarView.swift */; };
@@ -176,6 +178,8 @@
 		4C567F9E2AB0FCAB00516B52 /* GetPercentag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPercentag.swift; sourceTree = "<group>"; };
 		4C58BB362ABD981D00BB3298 /* CustomNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarView.swift; sourceTree = "<group>"; };
 		4C58BB382ABD997400BB3298 /* CustomNavBarProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBarProducts.swift; sourceTree = "<group>"; };
+		4C58BB3E2ABDB34D00BB3298 /* SiderbarIpadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiderbarIpadView.swift; sourceTree = "<group>"; };
+		4C58BB452ABDE56700BB3298 /* SiderbarIpadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiderbarIpadViewModel.swift; sourceTree = "<group>"; };
 		4C5A0EC62AA356BD00378E4B /* ProductsDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsDetail.swift; sourceTree = "<group>"; };
 		4C5A0EC82AA3781400378E4B /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		4C7C51D22AAF5E1200DB17BD /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
@@ -538,6 +542,15 @@
 			path = Navbar;
 			sourceTree = "<group>";
 		};
+		4C58BB3D2ABDB32E00BB3298 /* SiderbarIpad */ = {
+			isa = PBXGroup;
+			children = (
+				4C58BB3E2ABDB34D00BB3298 /* SiderbarIpadView.swift */,
+				4C58BB452ABDE56700BB3298 /* SiderbarIpadViewModel.swift */,
+			);
+			path = SiderbarIpad;
+			sourceTree = "<group>";
+		};
 		4C5A0EC52AA356A600378E4B /* Detail */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,6 +675,7 @@
 		4CE7A0342A9DF850009ED1E0 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
+				4C58BB3D2ABDB32E00BB3298 /* SiderbarIpad */,
 				4C20740D2AB9FA4100E4FE12 /* Components */,
 				4CE7A0352A9DF85D009ED1E0 /* SidebarView.swift */,
 				4CE7A0372A9E0B94009ED1E0 /* EnumSidbarMenu.swift */,
@@ -830,6 +844,7 @@
 				4C20741F2ABA000D00E4FE12 /* PaymentView.swift in Sources */,
 				4C3FFC352A9CEF4500D4CA6E /* GetDocumentFromFireStore.swift in Sources */,
 				4C3FFC322A9CEE6400D4CA6E /* Product.swift in Sources */,
+				4C58BB3F2ABDB34D00BB3298 /* SiderbarIpadView.swift in Sources */,
 				4C3FFC372A9CF57700D4CA6E /* CategoriesRepository.swift in Sources */,
 				4C2074002AB9F82B00E4FE12 /* MeinProfile.swift in Sources */,
 				4C3FFC532A9D16B100D4CA6E /* ProductCell.swift in Sources */,
@@ -868,6 +883,7 @@
 				4C7C51DA2AAF671300DB17BD /* BottomBarIcon.swift in Sources */,
 				4CB2BCD32AA09E590002BD78 /* SignUpViewModel.swift in Sources */,
 				4C3FFC402A9D04E400D4CA6E /* CategoriesViewModel.swift in Sources */,
+				4C58BB462ABDE56700BB3298 /* SiderbarIpadViewModel.swift in Sources */,
 				4CE131002AB24A98005DF55D /* DefaultTextField.swift in Sources */,
 				4C2073FB2AB9F7A100E4FE12 /* OrderView.swift in Sources */,
 				4C3FFC502A9D0EB100D4CA6E /* CategoriesView.swift in Sources */,

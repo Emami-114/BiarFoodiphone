@@ -15,23 +15,27 @@ struct FavoritsView: View {
             CustomNavBarView(showBackButton: false, title: Strings.favoritSeit,trillingButtonAction: {}, backButtonAction: {})
             
             ScrollView {
-                LazyVStack{
+                LazyVStack(spacing: 5){
                     ForEach(viewModel.products,id: \.id){product in
-                        NavigationLink(destination: ProductsDetail(product: product)) {
-                            FavoriteCell(product: product)
+                        NavigationLink(value: product) {
+                            FavoriteCell(product: product) {
+                                viewModel.resertFavorite()
+                                viewModel.deleteFavoriteProduct(with: product.id ?? "")
+                            }
+
                         }
-                       
+                        NavigationLink(destination: ProductsDetail(product: product)) {
+                        }
                     } 
-                    .onDelete(perform: { indexSet in
-                        viewModel.deleteFavoriteProduct(at: indexSet)
-                    })
                 }
             }
-           
         }
-       
+        .navigationDestination(for: Product.self) { product in
+            ProductsDetail(product: product)
+        }
         .onAppear{
             viewModel.fetchFavoriteProducts()
+
         }
     }
 }

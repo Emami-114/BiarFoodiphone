@@ -18,7 +18,10 @@ struct ProductsDetail: View {
     
     var body: some View {
         VStack(alignment: .leading,spacing: 10){
-            
+            CustomNavBarView(title: product.title,trillingButtonAction: {}, backButtonAction: {
+                dismiss()
+            })
+            .lineLimit(1)
         ScrollView(.vertical,showsIndicators: false){
             
                 ZStack(alignment: .bottom){
@@ -176,30 +179,85 @@ struct ProductsDetail: View {
                     Text("  ")
                 }
     
-            }
-        }.frame(minWidth: 300,minHeight: 200)
-            .padding()
+        }.padding(.horizontal)
+                addToCart
             
+        }
+//        .frame(minWidth: 300,minHeight: 200)
+            .navigationBarBackButtonHidden(true)
         .background(Color.theme.backgroundColor)
-        .alert(Text("Achtung"), isPresented: $showAlert, actions: {
+        .alert(Text(Strings.youAreNotLoggedIn), isPresented: $showAlert, actions: {
             HStack{
                 NavigationLink(destination: AuthenticationView().navigationBarBackButtonHidden(true)) {
-                    Text("Anmelden")
+                    Text(Strings.login)
                 }
                 Button(role: .cancel) {
                     showAlert = false
                 } label: {
-                    Text("Abbrechen")
+                    Text(Strings.cancel)
                 }
 
             }
         }, message: {
-            Text("Bevor sie Produkten im warenkorb anlegen, müssen sie sich anmelden")
+            Text(Strings.YouMustLogInBeforeAddingProductsToTheShoppingCart)
         })
         .onAppear{
             viewModel.fetchFavoriteSingle(with: product.id ?? "")
             viewModel.fetchDetailProducts(with: product.categorie.first ?? "")
         }
+    }
+    
+    private var addToCart: some View{
+            HStack{
+                Spacer()
+                if viewModel.isProductOnCart(productId: product.id ?? ""){
+                    HStack{
+                        Button{
+                            viewModel.quantityminus(with: product.id ?? "")
+                        }label: {
+                            Image(systemName: "minus")
+                                .font(.title.bold())
+                                .foregroundColor(Color.theme.white)
+                        }.frame(width: 100,height: 50)
+                        Text("\(viewModel.isProductOnCartQuantity(productId: product.id ?? ""))")
+                            .font(.title.bold())
+                            .frame(width: 100,height: 50)
+                                .background(Color.theme.white)
+                        Button{
+                            viewModel.quantityPlus(with: product.id ?? "")
+                        }label: {
+                            Image(systemName: "plus")
+                                .font(.title.bold())
+                                .foregroundColor(Color.theme.white)
+                        }
+                            .frame(width: 100,height: 50)
+                            .background(Color.theme.greenColor)
+                    }  .frame(width: 300,height: 50)
+                        .background(Color.theme.greenColor)
+                        .cornerRadius(15)
+                }else {
+                    Button{
+                        viewModel.addCartProductId(with: product.id ?? "")
+                    }label: {
+                        if viewModel.loading{
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: Color.theme.white))
+                        }else {
+                            Text(Strings.addToCart)
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color.theme.white)
+                        }
+                      
+                    }
+                    .frame(width: 300,height: 50)
+                        .background(Color.theme.greenColor)
+                        .cornerRadius(15)
+                }
+               Spacer()
+                
+            }
+        
     }
     
     @ViewBuilder
@@ -216,9 +274,9 @@ struct ProductsDetail: View {
                 TableModel(title: "Fett", nutritionValue: "\(product.fat ) g"),
                 TableModel(title: "davon Fettsäure", nutritionValue: "\(product.fatFromSour ) g"),
                 TableModel(title: "Kohlenhydrate", nutritionValue: "\(product.carbohydrates ) g"),
-                TableModel(title: "Kohlenhydrate", nutritionValue: "\(product.CarbohydratesFromSugar ) g"),
-                TableModel(title: "Kohlenhydrate", nutritionValue: "\(product.protein ) g"),
-                TableModel(title: "Kohlenhydrate", nutritionValue: "\(product.salt ) g"),
+                TableModel(title: "davon Zucker", nutritionValue: "\(product.CarbohydratesFromSugar ) g"),
+                TableModel(title: "Eiweiß", nutritionValue: "\(product.protein ) g"),
+                TableModel(title: "Salz", nutritionValue: "\(product.salt ) g"),
             ]
             HStack{
                 Table(nutriList) {
@@ -269,7 +327,7 @@ struct ProductsDetail: View {
         ScrollView(.horizontal,showsIndicators: false){
             HStack(spacing: 30){
                 ForEach(tabList,id: \.self) { tab in
-                    TabBarItem(tabBarItemName: tab, nameSpace: nameSpace, currentTab: $viewModel.selectedTab, tabID: tab, fetchProduct: {})
+                    TabBarItem(textColor: Color.theme.blackColor,tabBarItemName: tab, nameSpace: nameSpace, currentTab: $viewModel.selectedTab, tabID: tab, fetchProduct: {})
                 }
             }
         }.padding(0)

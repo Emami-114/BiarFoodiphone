@@ -12,11 +12,12 @@ struct ContentView: View {
     @State var isShowingSidebar = false
     @State var navigationShow : NavigationSplitViewVisibility = .all
     @StateObject private var sidbarViewModel = SidbarViewModel()
+    @StateObject private var sidbarIpdadViewModel = SiderbarIpadViewModel()
     @EnvironmentObject var userViewModel: UserViewModel
+    @State private var showKontoSidbar: Bool = false
 
     var body: some View {
         responsiveView{ props in
-//                NavigationStack{
                 if !(props.isIpad || props.isLandscape){
                         if isShowingSidebar {
                                     SidebarView(isShowing: $isShowingSidebar)
@@ -40,22 +41,46 @@ struct ContentView: View {
                     }
                            
                     }else{
-                        NavigationSplitView(columnVisibility: $navigationShow, sidebar: {
-                            SidebarView(isShowing: $isShowingSidebar)
-//                                .environmentObject(sidbarViewModel)
+                            NavigationSplitView(columnVisibility: $navigationShow, sidebar: {
+                                SiderbarIpadView(showingKontoSidbar: $showKontoSidbar)
+                                    .environmentObject(sidbarIpdadViewModel)
+                                    .environmentObject(sidbarViewModel)
+                                    .navigationSplitViewColumnWidth(220)
+                            }, detail: {
+                                if showKontoSidbar{
+                                    sidbarIpdadViewModel.view
+                                        .transition(.slide)
+                                }else {
+                                    SiderbarDetailsView(props: props)
+                                        .transition(.slide)
 
-                        }, detail: {
-                            HomeView(sidbarShowing: $isShowingSidebar, props: props, naviagtionToCart: {})
-
-                        }).navigationSplitViewStyle(.balanced)
-                            
+                                }
+                               
+                            })
+                        .navigationSplitViewStyle(.balanced)
                     }
-      
-//            }
-                    
+                
             }.background(Color.theme.backgroundColor)
 
             .environmentObject(sidbarViewModel)
+    }
+    
+ @ViewBuilder
+    func SiderbarDetailsView(props: Properties) -> some View{
+        switch self.sidbarIpdadViewModel.currentItem{
+        case Strings.home:
+            AnyView(HomeView(sidbarShowing: .constant(false), props: props, naviagtionToCart: {
+                sidbarIpdadViewModel.currentItem = Strings.shoppingCart
+            }))
+        case Strings.search:
+            AnyView(SearchView())
+        case Strings.shoppingCart:
+            AnyView(CartsView())
+        case Strings.favoritSeit:
+            AnyView(FavoritsView())
+        default:
+            AnyView(Text(""))
+        }
     }
 }
 

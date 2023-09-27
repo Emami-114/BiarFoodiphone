@@ -47,11 +47,24 @@
         }
       }
     },
-    "Achtung" : {
-
-    },
     "Address" : {
 
+    },
+    "addToCart" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "In den Warenkorb"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add To Cart"
+          }
+        }
+      }
     },
     "Adresse" : {
       "localizations" : {
@@ -109,9 +122,6 @@
 
     },
     "Bestellungemn" : {
-
-    },
-    "Bevor sie Produkten im warenkorb anlegen, müssen sie sich anmelden" : {
 
     },
     "Bitte geben Sie Ihre E-Mail-Adresse und Ihr Kennwort an." : {
@@ -261,6 +271,9 @@
         }
       }
     },
+    "dfvedfv" : {
+
+    },
     "E-mail" : {
       "localizations" : {
         "de" : {
@@ -325,6 +338,12 @@
     "Error" : {
 
     },
+    "erverv" : {
+
+    },
+    "erveverv" : {
+
+    },
     "favoritSeit" : {
       "localizations" : {
         "de" : {
@@ -343,6 +362,12 @@
     },
     "firstName" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vorname"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -392,6 +417,22 @@
         }
       }
     },
+    "home" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        }
+      }
+    },
     "houseNumber" : {
       "localizations" : {
         "de" : {
@@ -409,7 +450,14 @@
       }
     },
     "imprint" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impressum"
+          }
+        }
+      }
     },
     "Incl_VAT" : {
       "localizations" : {
@@ -426,6 +474,9 @@
           }
         }
       }
+    },
+    "Konto" : {
+
     },
     "Land" : {
 
@@ -497,6 +548,9 @@
         }
       }
     },
+    "Menu" : {
+
+    },
     "mobilePhoneNumber" : {
       "localizations" : {
         "de" : {
@@ -557,6 +611,12 @@
     },
     "noSelection" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Auswahl"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -772,8 +832,18 @@
         }
       }
     },
-    "salutation" : {
+    "rverve" : {
 
+    },
+    "salutation" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anrede"
+          }
+        }
+      }
     },
     "save" : {
       "localizations" : {
@@ -803,6 +873,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saved"
+          }
+        }
+      }
+    },
+    "search" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Suche"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
           }
         }
       }

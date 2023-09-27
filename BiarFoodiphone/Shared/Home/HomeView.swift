@@ -12,19 +12,17 @@ struct HomeView: View {
     @StateObject var sliderViewModel = SliderViewModel()
     @StateObject var categoriesViewModel = CategorieViewModel()
     @StateObject var productsViewModel = ProductsViewModel()
-    var props: Properties
+    var props: Properties? = nil
     var naviagtionToCart: () -> Void
     @State var selectedIndex = 0
     let time = Timer.publish(every: 5, on: .main, in: .default).autoconnect()
 
     
     var body: some View {
-            
         NavigationStack{
                 ZStack{
                     Color.theme.backgroundColor
                         .ignoresSafeArea(.all,edges: .all)
-
                     VStack{
                         CustomNavBarView(showBackButton: false,title: "Home",trillingButtonAction: {}, backButtonAction: {})
                         SliderView(viewModel: sliderViewModel,selectedIndex: $selectedIndex)
@@ -34,11 +32,13 @@ struct HomeView: View {
                                 }
                                 
                             })
-
-                        CategoriesView(navigationToCart: naviagtionToCart)
-                            .environmentObject(categoriesViewModel)
-                            .environmentObject(productsViewModel)
-                        Spacer()
+                        if let props = props {
+                            CategoriesView(props: props, navigationToCart: naviagtionToCart)
+                                .environmentObject(categoriesViewModel)
+                                .environmentObject(productsViewModel)
+                            Spacer()
+                        }
+                       
                     }
                 }
             
@@ -49,6 +49,6 @@ struct HomeView: View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(sidbarShowing: .constant(false), props: .init(isLandscape: false, isIpad: false, size: CGSize(), isIphone: true), naviagtionToCart: {})
+        HomeView(sidbarShowing: .constant(false), props: .init(isLandscape: false, isIpad: false, size: CGSize(), isCompat: true), naviagtionToCart: {})
     }
 }

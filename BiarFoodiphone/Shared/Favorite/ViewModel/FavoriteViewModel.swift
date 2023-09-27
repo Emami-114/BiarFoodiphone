@@ -27,6 +27,7 @@ class FavoriteViewModel: ObservableObject {
         .store(in: &cancellable)
         
         fetchFavorits()
+        
     }
     
     func fetchFavoriteProducts(){
@@ -42,12 +43,26 @@ class FavoriteViewModel: ObservableObject {
     func fetchFavorits(){
             favoriteRepository.fetchUserFavorite()
     }
-    
-    func deleteFavoriteProduct(at offsets: IndexSet){
-          offsets.map { favorits[$0] }.forEach { productId in
-               let productId = productId.productId
-              favoriteRepository.deleteUserFavorite(with: productId)
+    func resertFavorite(){
+        if favorits.count < 1 {
+            fetchFavorits()
+            fetchFavoriteProducts()
+            favoriteRepository.products.send([])
+            favoriteRepository.favoriteproducts.send([])
         }
+    }
+    
+    func deleteFavoriteProduct(with id: String){
+//          offsets.map { favorits[$0] }.forEach { productId in
+//               let productId = productId.productId
+//              favoriteRepository.deleteUserFavorite(with: productId)
+//        }
+        
+            favoriteRepository.deleteUserFavorite(with: id)
+            fetchFavorits()
+            fetchFavoriteProducts()
+        
+        
     }
     
 }

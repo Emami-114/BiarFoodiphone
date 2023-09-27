@@ -81,7 +81,7 @@ extension CartRepository {
     func fetchCartProducts(productsId: [String]){
         FirebaseManager.shared.database.collection("produkten")
             .whereField("isPublic", isEqualTo: true)
-            .whereField("productId", in: productsId)
+            .whereField("id", in: productsId)
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
                     print(error.localizedDescription)

@@ -28,7 +28,6 @@ class BottomBarViewModel: ObservableObject {
     }
     @MainActor
     func buttonBarChange(bottomBar: BottomBar){
-        
         DispatchQueue.main.async {
             Task{
             withAnimation(.easeInOut(duration: 0.4)){

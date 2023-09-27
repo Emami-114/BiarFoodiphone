@@ -10,12 +10,12 @@ import SwiftUI
 struct ProductsView: View {
     @EnvironmentObject var viewModel : ProductsViewModel
     @EnvironmentObject var categoryViewModel : CategorieViewModel
+    var props: Properties
     var navigationToCart: () -> Void
     @Environment(\.dismiss) var dismiss
      var categorieId : String
     var body: some View {
         NavigationStack {
-            responsiveView { props in
                 VStack(spacing: 0){
                     CustomNavBarProducts(title: Strings.products,cartCount: $viewModel.productOnCart, trillingButtonAction: {
                         dismiss()
@@ -41,15 +41,8 @@ struct ProductsView: View {
                               .cornerRadius(10)
                               .padding(.vertical,10)
                               .id(subCategory.id ?? "")
-
-        //                      .onAppear{
-        //                          viewModel.selectedSubCategorie = subCategory.id ?? ""
-        //
-        ////                          viewModel.fetchProducts()
-        //                          print(viewModel.selectedSubCategorie)
-        //                      }
                              
-                          LazyVGrid(columns: Array(repeating: GridItem(.flexible(),spacing: 7), count: (props.isIpad || props.isLandscape) ? 6 : 3)) {
+                          LazyVGrid(columns: Array(repeating: GridItem(.flexible(),spacing: 7), count: props.isIpad && !props.isLandscape ? 4 : props.isIpad && props.isLandscape ? 6 : 3)) {
                                   
                                   ForEach(viewModel.productesFilter(subCategorie: subCategory.id ?? ""),id: \.id){products in
                                       
@@ -73,7 +66,7 @@ struct ProductsView: View {
               
                 }
                 
-            }
+            
             .ignoresSafeArea(edges: .bottom)
             .onAppear{
                 viewModel.selectedCategorie = categorieId
@@ -88,7 +81,7 @@ struct ProductsView: View {
 
 struct ProductsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductsView(navigationToCart: {}, categorieId: "")
+        ProductsView(props: .init(isLandscape: false, isIpad: false, size: CGSize(), isCompat: true), navigationToCart: {}, categorieId: "")
             .environmentObject(CategorieViewModel())
             .environmentObject(ProductsViewModel())
     }

@@ -39,13 +39,21 @@ struct TabBarView: View {
     var body: some View{
         VStack {
             ScrollView(.horizontal,showsIndicators: false) {
-                        HStack(spacing: 25){
-                                ForEach(tabBarOption,id: \.id) {tab in
-                                    TabBarItem(tabBarItemName: tab.name, nameSpace: nameSpace, currentTab: self.$currenTab, tabID: tab.id ?? "",fetchProduct: fetchProduct)
-                                        .tag(tab.id ?? "")
-                                }
-                            
-                            }
+                ScrollViewReader {proxy in
+                    HStack(spacing: 25){
+                                    ForEach(tabBarOption,id: \.id) {tab in
+                                        TabBarItem(tabBarItemName: tab.name, nameSpace: nameSpace, currentTab: self.$currenTab, tabID: tab.id ?? "",fetchProduct: fetchProduct)
+                                            .tag(tab.id ?? "")
+                                            .id(tab.id ?? "")
+                                    }
+                    }
+                    .onChange(of: currenTab, perform: { value in
+                        withAnimation(.spring()){
+                            proxy.scrollTo(value, anchor: .center)
+                        }
+                    })
+                }
+                
             }
             Spacer()
         }.padding(.horizontal)
@@ -55,6 +63,7 @@ struct TabBarView: View {
 }
 
 struct TabBarItem:View {
+    var textColor: Color = Color.theme.white
     var tabBarItemName : String
     let nameSpace: Namespace.ID
     @Binding var currentTab : String
@@ -68,7 +77,7 @@ struct TabBarItem:View {
             VStack{
                 Spacer()
                 Text(tabBarItemName)
-                    .foregroundColor(Color.theme.white)
+                    .foregroundColor(textColor)
                     .font(.headline)
 
                 if currentTab == tabID {
