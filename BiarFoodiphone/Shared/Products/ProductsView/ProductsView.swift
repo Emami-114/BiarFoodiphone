@@ -9,32 +9,31 @@ import SwiftUI
 
 struct ProductsView: View {
     @EnvironmentObject var viewModel : ProductsViewModel
-    @EnvironmentObject var categoryViewModel : CategorieViewModel
-    @State private var scrollID: Int? = nil
+    @State private var scrollID: String?
     var props: Properties
     var navigationToCart: () -> Void
     @Environment(\.dismiss) var dismiss
      var categorieId : String
     var body: some View {
-        NavigationStack {
+//        NavigationStack {
                 VStack(spacing: 0){
-                    let subCat = categoryViewModel.filterSubCategories(selectedMain: viewModel.selectedCategorie)
-
                     CustomNavBarProducts(showTrillingButton: props.isIpad ? false : true, title: "",cartCount: $viewModel.productOnCart, trillingButtonAction: {
                         dismiss()
                         navigationToCart()
                     }, backButtonAction: {
                         dismiss()
                     })
-                    ProductTabView()
+                    ProductTabView(action: {subCatId in
+                        withAnimation(.spring()){
+                            scrollID = subCatId
+                        }
+                    })
                         .environmentObject(viewModel)
-                        .environmentObject(categoryViewModel)
                         
-              ScrollViewReader { proxy in
-                  ScrollView(.vertical,showsIndicators: false) {
+                    ScrollView(showsIndicators: false) {
                     LazyVStack {
-                        ForEach(subCat.indices,id: \.self){index in
-                              Text(subCat[index].name)
+                        ForEach(viewModel.subCategories.indices,id: \.self){index in
+                            Text(viewModel.subCategories[index].name)
                                   .font(.title3.bold())
                                   .foregroundColor(Color.theme.iconColor)
                                   .padding(10)
@@ -43,11 +42,11 @@ struct ProductsView: View {
                                   .background(Color.theme.white)
                                   .cornerRadius(10)
                                   .padding(.vertical,10)
-                                  .id(subCat[index].id ?? "")
+                                  .id(viewModel.subCategories[index].id ?? "")
                                  
                           LazyVGrid(columns: Array(repeating: GridItem(.flexible(),spacing: 7), count: props.isIpad && !props.isLandscape ? 4 : props.isIpad && props.isLandscape ? 6 : 3)) {
                               
-                              ForEach(viewModel.productesFilter(subCategorie: subCat[index].id ?? ""),id: \.id){product in
+                              ForEach(viewModel.productesFilter(subCategorie: viewModel.subCategories[index].id ?? ""),id: \.id){product in
                                   
                                   NavigationLink(destination: ProductsDetail(product: product)) {
                                       ProductCell(product: product,action: {
@@ -62,57 +61,34 @@ struct ProductsView: View {
                           }
                   }
                     }
-               
-                      .scrollTargetLayout()
-              }
-                  .scrollPosition(id: $scrollID,anchor: .top)
-                  .onChange(of: scrollID) { oldValue, newValue in
+                      
+                 
+                    .scrollTargetLayout()
+
+                  }.padding()
+                        .scrollPosition(id: $scrollID, anchor: .top)
+                        
+                  .onChange(of: scrollID ?? "") { oldValue, newValue in
                       withAnimation(.easeInOut(duration: 0.5)) {
-                          viewModel.selectedSubCategorie = subCat[newValue ?? 0].id ?? ""
+                          viewModel.selectedSubCategorie = newValue
                         }
               }
-                  .onChange(of:viewModel.selectedSubCategorie) { oldValue,newValue in
-                      withAnimation(.easeInOut(duration: 0.5)) {
-                          proxy.scrollTo(newValue,anchor: .top)
-                      }
-              }
-                 
-              }.padding()
-                    
+                  
                 }
-//                .overlay(content: {
-//                                if viewModel.startAnimation{
-//                                    if let selectedProduct = viewModel.selectedProduct {
-//                                        withAnimation(.easeInOut(duration: 0.3)){
-//                                            ProductCell(product: selectedProduct, action: {})
-//                                                .frame(width: 100, height: 100)
-////                                                .scaleEffect(CGSize(width: 0.5, height: 0.5))
-//                                                .symbolEffect(.bounce, options: .repeat(4).speed(5), value: viewModel.startAnimation)
-//  
-//  
-//  
-//                                                .offset(y: -300)
-//                                        }
-//                                    }
-//                                }
-//                })
-                .animation(.easeInOut(duration: 1), value: viewModel.startAnimation)
             
             .ignoresSafeArea(edges: .bottom)
             .onAppear{
                 viewModel.selectedCategorie = categorieId
                 viewModel.fetchProducts()
+                viewModel.filterSubCategories()
             }
-        }
         .navigationBarBackButtonHidden(true)
-
     }
 }
 
 struct ProductsView_Previews: PreviewProvider {
     static var previews: some View {
             ProductsView(props: .init(isLandscape: false, isIpad: false, size: CGSize(), isCompat: true), navigationToCart: {}, categorieId: "")
-                .environmentObject(CategorieViewModel())
                 .environmentObject(ProductsViewModel())
         
       

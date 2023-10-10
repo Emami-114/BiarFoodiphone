@@ -46,17 +46,16 @@ struct ContentView: View {
                                 .environmentObject(sidbarIpdadViewModel)
                                 .environmentObject(sidbarViewModel)
                                 .navigationSplitViewColumnWidth(220)
-                                .zIndex(0.5)
+                                .zIndex(1)
+
                             Divider()
                             Spacer()
                             if showKontoSidbar{
                                 
                                 sidbarIpdadViewModel.view
-                                    .zIndex(1)
 
                             }else {
                                 SiderbarDetailsView(props: props)
-                                    .zIndex(1)
 
                             }
                         }

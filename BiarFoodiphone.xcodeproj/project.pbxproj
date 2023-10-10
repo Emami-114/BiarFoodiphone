@@ -78,6 +78,10 @@
 		4C7C51D52AAF5E4000DB17BD /* EnumBottomBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C51D42AAF5E4000DB17BD /* EnumBottomBar.swift */; };
 		4C7C51D72AAF63FE00DB17BD /* BottomBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C51D62AAF63FE00DB17BD /* BottomBarViewModel.swift */; };
 		4C7C51DA2AAF671300DB17BD /* BottomBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7C51D92AAF671300DB17BD /* BottomBarIcon.swift */; };
+		4C8EBD672AD56C6200B67AC7 /* SearchFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EBD662AD56C6200B67AC7 /* SearchFieldView.swift */; };
+		4C8EBD692AD57FB600B67AC7 /* SearchRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EBD682AD57FB600B67AC7 /* SearchRepository.swift */; };
+		4C8EBD6B2AD581CA00B67AC7 /* SearchItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EBD6A2AD581CA00B67AC7 /* SearchItemView.swift */; };
+		4C8EBD712AD5D46B00B67AC7 /* ProducstListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8EBD702AD5D46B00B67AC7 /* ProducstListView.swift */; };
 		4C8FFF342ACC0A0C007E782B /* BraintreeCore in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8FFF332ACC0A0C007E782B /* BraintreeCore */; };
 		4C8FFF362ACC0A0C007E782B /* BraintreePayPal in Frameworks */ = {isa = PBXBuildFile; productRef = 4C8FFF352ACC0A0C007E782B /* BraintreePayPal */; };
 		4CAA3B732AD043FA00CFEEC6 /* SendSmtpMail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA3B722AD043FA00CFEEC6 /* SendSmtpMail.swift */; };
@@ -194,6 +198,10 @@
 		4C7C51D42AAF5E4000DB17BD /* EnumBottomBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumBottomBar.swift; sourceTree = "<group>"; };
 		4C7C51D62AAF63FE00DB17BD /* BottomBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarViewModel.swift; sourceTree = "<group>"; };
 		4C7C51D92AAF671300DB17BD /* BottomBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarIcon.swift; sourceTree = "<group>"; };
+		4C8EBD662AD56C6200B67AC7 /* SearchFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFieldView.swift; sourceTree = "<group>"; };
+		4C8EBD682AD57FB600B67AC7 /* SearchRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepository.swift; sourceTree = "<group>"; };
+		4C8EBD6A2AD581CA00B67AC7 /* SearchItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemView.swift; sourceTree = "<group>"; };
+		4C8EBD702AD5D46B00B67AC7 /* ProducstListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProducstListView.swift; sourceTree = "<group>"; };
 		4CAA3B722AD043FA00CFEEC6 /* SendSmtpMail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSmtpMail.swift; sourceTree = "<group>"; };
 		4CB2BCCA2AA089830002BD78 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4CB2BCCC2AA08B730002BD78 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
@@ -421,6 +429,7 @@
 				4C20741C2AB9FC8C00E4FE12 /* CartRepository.swift */,
 				4C2074222ABADF2E00E4FE12 /* OrderRepository.swift */,
 				4C2074262ABB1B8900E4FE12 /* AdressAutocompleteRepository.swift */,
+				4C8EBD682AD57FB600B67AC7 /* SearchRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -533,6 +542,7 @@
 			children = (
 				4C3FFC552A9D1E9200D4CA6E /* ProductsView.swift */,
 				4CD4D1952AA28EF000A16EE9 /* ProductsTabView.swift */,
+				4C8EBD702AD5D46B00B67AC7 /* ProducstListView.swift */,
 			);
 			path = ProductsView;
 			sourceTree = "<group>";
@@ -691,6 +701,8 @@
 			children = (
 				4C652A612ACCBA0900C5BB5A /* ViewModel */,
 				4CB39FC32ABD769900F60936 /* SearchView.swift */,
+				4C8EBD662AD56C6200B67AC7 /* SearchFieldView.swift */,
+				4C8EBD6A2AD581CA00B67AC7 /* SearchItemView.swift */,
 			);
 			path = SearchView;
 			sourceTree = "<group>";
@@ -897,13 +909,17 @@
 				4C2074112AB9FA8200E4FE12 /* SidbarViewModel.swift in Sources */,
 				4C2074092AB9F8A800E4FE12 /* CartViewModel.swift in Sources */,
 				4CB2BCD12AA09D7D0002BD78 /* SignInViewModel.swift in Sources */,
+				4C8EBD692AD57FB600B67AC7 /* SearchRepository.swift in Sources */,
 				4C7C51D72AAF63FE00DB17BD /* BottomBarViewModel.swift in Sources */,
+				4C8EBD672AD56C6200B67AC7 /* SearchFieldView.swift in Sources */,
+				4C8EBD712AD5D46B00B67AC7 /* ProducstListView.swift in Sources */,
 				4C7C51D52AAF5E4000DB17BD /* EnumBottomBar.swift in Sources */,
 				4CB2BCCB2AA089830002BD78 /* User.swift in Sources */,
 				4CB39FC12ABCF1EC00F60936 /* BottomBarIconWithCounter.swift in Sources */,
 				4C3FFBF92A9CEB5A00D4CA6E /* ContentView.swift in Sources */,
 				4C58BB372ABD981D00BB3298 /* CustomNavBarView.swift in Sources */,
 				4C5528082AD47D2E00C060BB /* MyProfile.swift in Sources */,
+				4C8EBD6B2AD581CA00B67AC7 /* SearchItemView.swift in Sources */,
 				4CB39FC42ABD769900F60936 /* SearchView.swift in Sources */,
 				4C2074232ABADF2E00E4FE12 /* OrderRepository.swift in Sources */,
 				4CB39FB32ABCA06B00F60936 /* ForgotPassword.swift in Sources */,

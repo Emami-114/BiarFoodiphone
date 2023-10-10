@@ -7,9 +7,13 @@
 
 import Foundation
 import Combine
+@MainActor
 class SearchViewModel: ObservableObject {
     @Published var categories = [Category]()
+    @Published var searchProducts = [Product]()
+    @Published var searchText = ""
     let categoryRepository = CategoriesRepository.shared
+    let searchRepository = SearchRepository.shared
     var cancellables = Set<AnyCancellable>()
     init(){
         categoryRepository.mainCategories.sink{[weak self] categories in
@@ -18,10 +22,15 @@ class SearchViewModel: ObservableObject {
         }.store(in: &cancellables)
         
         
-        fetchCategories()
+    }
+    func fetchCategories(){
+        DispatchQueue.main.async {
+            self.categoryRepository.fetchCategories()
+
+        }
     }
     
-    func fetchCategories(){
-        categoryRepository.fetchCategories()
+    func fetchSearchProducts(query: String)async throws{
+        self.searchProducts = try await searchRepository.fetchSearch(query: query)
     }
 }
