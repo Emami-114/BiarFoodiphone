@@ -8,24 +8,23 @@
 import SwiftUI
 
 struct BottomBarIcon: View {
-    let bottomBar: BottomBar
-    @Binding var showSiderBar : Bool
+    let icon: String
+    let title: String
+     var action : () -> Void
     @Binding var cartCount : Int
     @EnvironmentObject var viewModel: BottomBarViewModel
     var nameSpace: Namespace.ID
+     var isCart: Bool = false
     var body: some View {
         Button{
-            withAnimation(.default){
-                viewModel.currentItem = bottomBar
-                        if bottomBar == .account {
-                            self.showSiderBar = true
-                        }
+            withAnimation(.spring){
+                action()
             }
         }label: {
             HStack{
-                if bottomBar == .cart{
-                    if bottomBar == viewModel.currentItem{
-                        Text(bottomBar.title)
+                if isCart{
+                    if title == viewModel.currentItem.title{
+                        Text(title)
                     }
                     Image(systemName: "cart")
                         .overlay(alignment: .topTrailing) {
@@ -37,38 +36,37 @@ struct BottomBarIcon: View {
                                     .background(Circle().fill(.red))
                                     .offset(x: 5,y: -9)
                             }
-                         
                         }
                    
                 }else {
-                    Image(systemName: bottomBar.icon)
-                    if bottomBar == viewModel.currentItem{
-                        Text(bottomBar.title)
+                    Image(systemName: icon)
+                    if title == viewModel.currentItem.title{
+                        Text(title)
                     }
                 }
 
             }
-            .foregroundColor(bottomBar == viewModel.currentItem ? .white : .black)
+            .foregroundColor(title == viewModel.currentItem.title ? .white : .black)
                 .padding()
                 .frame(height: 55)
                 .background{
-                    if bottomBar == viewModel.currentItem{
-                        Rectangle().fill(bottomBar == viewModel.currentItem ? Color.theme.greenColor : .clear)
-                            .roundedCornerView(corners: [.topLeft,.topRight], radius: 20)
+                    if title == viewModel.currentItem.title{
+                        Rectangle().fill(title == viewModel.currentItem.title ? Color.theme.greenColor : .clear)
+                            .roundedCornerView(corners: [.topLeft,.bottomRight], radius: 20)
                             .matchedGeometryEffect(id: "bottomBar", in: nameSpace)
                             .shadow(radius: 3)
                     }
                 }
                 .offset(y: -5)
         }
-        .animation(.spring(), value: self.bottomBar)
+        .animation(.spring(), value: self.title)
 
     }
 }
 
 struct BottomBarIcon_Previews: PreviewProvider {
     static var previews: some View {
-        BottomBarIcon(bottomBar: .home,showSiderBar: .constant(false), cartCount: .constant(1),nameSpace: Namespace().wrappedValue)
-            .environmentObject(BottomBarViewModel(showSiderBar: .constant(false)))
+        BottomBarIcon(icon: "house.fill", title: "Home", action: {}, cartCount: .constant(10), nameSpace: Namespace().wrappedValue)
+            .environmentObject(BottomBarViewModel())
     }
 }

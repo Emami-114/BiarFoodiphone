@@ -9,32 +9,27 @@ import SwiftUI
 import Kingfisher
 struct SliderView: View {
     @ObservedObject var viewModel : SliderViewModel
-    let time = Timer.publish(every: 0.4, on: .main, in: .common).autoconnect()
     @Binding var selectedIndex : Int
+    let props: Properties
     var body: some View {
         ScrollView(.horizontal,showsIndicators: false){
             HStack{
                 TabView(selection: $selectedIndex) {
                     if let sliders = viewModel.sliders{
                         ForEach(0..<sliders.count,id: \.self){index in
-                        GeometryReader { proxy in
                             SliderCell(slider: sliders[index])
-                                    .rotation3DEffect(
-                                        Angle(degrees: getPercentag(geo: proxy) * 20)
-                                        , axis: (x: 1.0, y: 5.0, z: 1.0))
+
                                     .padding(.horizontal)
-                                    .padding(.top,7)
-                            }
+                            
                         }
                     }
                 }
+
                 .tabViewStyle(.page(indexDisplayMode: .always))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
 
-            }
+            }.frame(width: props.isIpad ? 700 : 400,height: 280)
             
-            .frame(width: 380,height: 280)
-            .padding(5)
         }
     }
 }
@@ -48,8 +43,8 @@ struct SliderCell: View{
                 .cacheMemoryOnly()
                 .fade(duration: 0.9)
                 .resizable()
-                .scaledToFill()
-                .frame(maxWidth: 380,maxHeight: 230)
+                .scaledToFit()
+                .frame(maxWidth: .infinity,maxHeight: .infinity)
                 .cornerRadius(15)
                 .clipped()
             if !(slider.desc.isEmpty && slider.title.isEmpty){
@@ -72,7 +67,7 @@ struct SliderCell: View{
                     .cornerRadius(10)
             }
            
-        }.frame(maxWidth: 380,maxHeight: 230)
+        }.frame(maxWidth: .infinity,maxHeight: .infinity)
             .cornerRadius(15)
             .shadow(color: Color.theme.subTextColor.opacity(0.2),radius: 10)
 
@@ -82,6 +77,6 @@ struct SliderCell: View{
 
 struct SliderView_Previews: PreviewProvider {
     static var previews: some View {
-        SliderView(viewModel: SliderViewModel(),selectedIndex: .constant(0))
+        SliderView(viewModel: SliderViewModel(),selectedIndex: .constant(0), props: .init(isLandscape: false, isIpad: false, size: CGSize(), isCompat: true))
     }
 }

@@ -20,9 +20,13 @@ class MeinProfileViewModel: ObservableObject {
     @Published var country = ""
     @Published var city = ""
     
-    let userRepository = UserRepository.shared
-    var cancellable = Set<AnyCancellable>()
+    @Published var adressResult = [AdressProperties]()
+    @Published var selectedAdresse : AdressProperties? = nil
     
+    let userRepository = UserRepository.shared
+    let adressRepository = AdressAutocompleteRepository.shared
+    var cancellable = Set<AnyCancellable>()
+    @Published var loading = false
     
     init(){
         userRepository.user.sink{[weak self] user in
@@ -31,18 +35,29 @@ class MeinProfileViewModel: ObservableObject {
             self._salutation = Published(initialValue: user.salutation)
             self._firstName = Published(initialValue: user.firstName)
             self._lastName = Published(initialValue: user.lastName)
-            self._street = Published(initialValue: user.street)
-            self._houseNumber = Published(initialValue: user.houseNumBer)
-            self._zipCode = Published(initialValue: user.zipCode)
             self._email = Published(initialValue: user.email)
             self._emailConfirm = Published(initialValue: user.emailConfirm)
-            self._phoneNumber = Published(initialValue: user.phoneNumber)
-            self._country = Published(initialValue: user.country)
-            self._city = Published(initialValue: user.city)
         }.store(in: &cancellable)
+        
+    }
+    
+    func fetchAdresseCompletet(adreese: String) async throws {
+                let adressResult2 = try await self.adressRepository
+                    .autoCompletet(input: adreese)
+                self.adressResult = adressResult2
+
+    }
+    
+    func fetchUserData(){
+        userRepository.fetchUserData()
+    }
+    
+    var saveButtonDisable: Bool {
+        street.isEmpty || houseNumber.isEmpty || zipCode.isEmpty || country.isEmpty || city.isEmpty || phoneNumber.isEmpty
     }
     
     func updateUserData(){
-        userRepository.updateUserData(email: email, salutation: salutation, firstName: firstName, lastName: lastName, street: street, houseNumBer: houseNumber, zipCode: zipCode, phoneNumber: phoneNumber, country: country, city: city)
+            self.userRepository.updateUserData(email: email, salutation: salutation, firstName: firstName, lastName: lastName, street: street, houseNumBer: houseNumber, zipCode: zipCode, phoneNumber: phoneNumber, country: country, city: city)
+        
     }
 }

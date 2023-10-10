@@ -21,13 +21,8 @@ struct ColorTheme{
     let white = Color("White")
     let greenBlack = Color("GreenBlack")
     let linearGradient = LinearGradient(colors: [
-        Color("Green").opacity(0.7),
-        Color("Green").opacity(0.8),
         Color("Green").opacity(0.9),
         Color("Green"),
-        Color("Green"),
         Color("Green").opacity(0.9),
-        Color("Green").opacity(0.8),
-        Color("Green").opacity(0.7),
     ], startPoint: .topLeading, endPoint: .bottomTrailing)
 }

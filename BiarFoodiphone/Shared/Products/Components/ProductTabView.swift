@@ -10,7 +10,6 @@ import SwiftUI
 struct ProductTabView: View {
     @EnvironmentObject var categoryViewModel : CategorieViewModel
     @EnvironmentObject var productViewModel : ProductsViewModel
-  
     var body: some View {
         let mainCategories = categoryViewModel.categories.filter { category in
             category.type == "Main"
@@ -19,7 +18,7 @@ struct ProductTabView: View {
             subCategorie.mainId == productViewModel.selectedCategorie
         }
         
-        VStack (spacing: -20){
+        VStack (spacing: 0){
             TabBarView(currenTab: $productViewModel.selectedCategorie, tabBarOption: mainCategories,fetchProduct: {
                 productViewModel.fetchProducts()
                 productViewModel.selectedSubCategorie = subCategorie.first?.id ?? ""
@@ -27,8 +26,7 @@ struct ProductTabView: View {
             })
            
             TabBarSubView(currenTab: $productViewModel.selectedSubCategorie, tabBarOption: categoryViewModel.filterSubCategories(selectedMain: productViewModel.selectedCategorie))
-                
-            
+               
     }
     }
 }
@@ -39,27 +37,34 @@ struct TabBarView: View {
     @Namespace var nameSpace
     var fetchProduct : () -> Void
     var body: some View{
-
-                ScrollView(.horizontal,showsIndicators: false) {
-
-                    HStack(spacing: 20){
-                       
-                        ForEach(tabBarOption,id: \.id) {tab in
-                            TabBarItem(tabBarItemName: tab.name, nameSpace: nameSpace, currentTab: self.$currenTab, tabID: tab.id ?? "",fetchProduct: fetchProduct)
-                                .tag(tab.id ?? "")
-                                
+        VStack {
+            ScrollView(.horizontal,showsIndicators: false) {
+                ScrollViewReader {proxy in
+                    HStack(spacing: 25){
+                                    ForEach(tabBarOption,id: \.id) {tab in
+                                        TabBarItem(tabBarItemName: tab.name, nameSpace: nameSpace, currentTab: self.$currenTab, tabID: tab.id ?? "",fetchProduct: fetchProduct)
+                                            .tag(tab.id ?? "")
+                                            .id(tab.id ?? "")
+                                    }
+                    }
+                    .onChange(of: currenTab, { oldValue, newValue in
+                        withAnimation(.spring()){
+                            proxy.scrollTo(newValue, anchor: .center)
                         }
-                        }
-                   
-                    .frame(height: 80)
+                    })
+                    
                 }
-            
-            
-         
+                
+            }
+            Spacer()
+        }.padding(.horizontal)
+        .frame(height: 44,alignment: .top)
+        .background(Color.theme.greenColor)
     }
 }
 
 struct TabBarItem:View {
+    var textColor: Color = Color.theme.white
     var tabBarItemName : String
     let nameSpace: Namespace.ID
     @Binding var currentTab : String
@@ -73,7 +78,8 @@ struct TabBarItem:View {
             VStack{
                 Spacer()
                 Text(tabBarItemName)
-                    .foregroundColor(Color.theme.blackColor)
+                    .foregroundColor(textColor)
+                    .font(.headline)
 
                 if currentTab == tabID {
                     Color.red
@@ -92,16 +98,30 @@ struct TabBarSubView: View {
     @Binding var currenTab : String
     var tabBarOption: [Category]
     @Namespace var nameSpace
-   
     var body: some View{
-                ScrollView(.horizontal,showsIndicators: false) {
-                    HStack(spacing: 20){
+            ScrollView(.horizontal,showsIndicators: false) {
+                ScrollViewReader { proxy in
+
+                HStack(spacing: 20){
                         ForEach(tabBarOption,id: \.id) {tab in
                             TabBarSubItem(tabBarItemName: tab.name, nameSpace: nameSpace, currentTab: self.$currenTab, tabID: tab.id ?? "")
+                                .id(tab.id ?? "")
                         }
-                    }
-                    .frame(height: 80)
+                    
                 }
+                .onChange(of: currenTab, { oldValue, newValue in
+                    withAnimation(.spring()){
+                        proxy.scrollTo(newValue, anchor: .center)
+                    }
+                })
+            }
+            .padding(.horizontal)
+            .frame(height: 50,alignment: .center)
+            .background(Color.clear)
+            
+        }
+                
+                
     }
 }
 
@@ -120,7 +140,8 @@ struct TabBarSubItem:View {
                 Spacer()
                 let tabName = tabBarItemName
                 Text(tabName).lineLimit(1)
-                    .foregroundColor(Color.theme.blackColor)
+                    .font(.footnote)
+                    .foregroundColor(currentTab == tabID ? Color.theme.white : Color.theme.blackColor)
                     .padding(10)
                     .background{
                         if currentTab == tabID {

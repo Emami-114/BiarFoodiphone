@@ -12,18 +12,18 @@ struct SignUpView: View {
     @EnvironmentObject var sidbarViewModel: SidbarViewModel
     @StateObject var viewModel = SignupViewModel()
     @State var showPassword: Bool = false
-    let listSalutation = ["Kein Auswahl","Herr","Frau"]
+    let listSalutation = [Strings.noSelection,Strings.mr,Strings.mrs_ms]
     var body: some View {
         
         VStack(spacing: 10){
             VStack{
-                Text("Neues Konto erstellen")
+                Text(Strings.createAnewAccount)
                     .font(.title2.bold())
                     .foregroundColor(Color.theme.blackColor)
             }.padding(.bottom)
            
             HStack{
-                Text("Anrede")
+                Text(Strings.salutation)
                 Spacer()
                 Picker("", selection: $viewModel.salutation) {
                     ForEach(listSalutation,id: \.self) { salutation in
@@ -34,21 +34,21 @@ struct SignUpView: View {
             }.frame(maxWidth: .infinity)
                 .DefaultTextFieldModifier(frameHeight: 36, paddingHorizontal: 40)
          
-                TextField("Vorname", text: $viewModel.firstName,prompt: Text("Vorname").foregroundColor(Color.theme.subTextColor.opacity(0.5)))
+            TextField(Strings.firstName, text: $viewModel.firstName)
                 .DefaultTextFieldModifier(frameHeight: 38, paddingHorizontal: 40)
-                TextField("Nachname", text: $viewModel.lastName,prompt: Text("Nachname").foregroundColor(Color.theme.subTextColor.opacity(0.5)))
+            TextField(Strings.lastName, text: $viewModel.lastName)
                 .DefaultTextFieldModifier(frameHeight: 38, paddingHorizontal: 40)
-                TextField("E-Mail Adresse", text: $viewModel.email,prompt: Text("E-Mail Adresse").foregroundColor(Color.theme.subTextColor.opacity(0.5)))
+            TextField(Strings.emailAddress, text: $viewModel.email)
                 
                 .DefaultTextFieldModifier(frameHeight: 38, paddingHorizontal: 40)
                     .keyboardType(.emailAddress)
             
             HStack{
                 if showPassword {
-                    TextField("Password(mind. 6 Zeichen)", text: $viewModel.password,prompt: Text("Password(mind. 6 Zeichen)").foregroundColor(Color.theme.subTextColor.opacity(0.5)))
+                    TextField(Strings.passwordMin6, text: $viewModel.password)
 
                 }else{
-                    SecureField("Password(mind. 6 Zeichen)", text: $viewModel.password,prompt: Text("Password(mind. 6 Zeichen)").foregroundColor(Color.theme.subTextColor.opacity(0.5)))
+                    SecureField(Strings.passwordMin6, text: $viewModel.password)
                 }
                 Button{
                     self.showPassword.toggle()
@@ -59,42 +59,56 @@ struct SignUpView: View {
             .DefaultTextFieldModifier(frameHeight: 38, paddingHorizontal: 40)
             if !viewModel.password.isEmpty,
                viewModel.password.count < 6 {
-                Label("Password(mind. 6 Zeichen", systemImage: "xmark.circle")
+                Label(Strings.passwordMin6, systemImage: "xmark.circle")
                     .foregroundColor(.red)
                     .font(.footnote)
             }
 
-            SecureField("Passwort bestätigen", text: $viewModel.passwordReentry,prompt: Text("Passwort bestätigen").foregroundColor(Color.theme.subTextColor.opacity(0.5)))
+            SecureField(Strings.confirmPassword, text: $viewModel.passwordReentry)
                 .DefaultTextFieldModifier(frameHeight: 38, paddingHorizontal: 40)
             if !viewModel.password.isEmpty,
                !viewModel.passwordReentry.isEmpty,
                viewModel.password != viewModel.passwordReentry {
-                Label("Kennwort stimmt nicht überein", systemImage: "xmark.circle")
+                Label(Strings.passwordDoesNotMatch, systemImage: "xmark.circle")
                     .foregroundColor(.red)
                     .font(.footnote)
             }
             
-            
             Button{
-             viewModel.register()
-            sidbarViewModel.currentItem = nil
+                viewModel.register(action: {
+                    sidbarViewModel.currentItem = .myAdress
+                })
             }label: {
-                Text("Registrieren")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
-                    .padding(8)
-                    .frame(width: 200)
-                    .background(Color.theme.greenColor)
-                    .cornerRadius(10)
+                if viewModel.loading{
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: Color.theme.white))
+                }else{
+                    Text(Strings.signUp)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                }
             }.buttonStyle(.plain)
+                .padding(8)
+                .frame(width: 200)
+                .background(Color.theme.greenColor)
+                .cornerRadius(10)
             .disabled(viewModel.disableAuthenticationButton)
             .padding(.top,10)
             
         }.offset(x: 30)
             .rotation3DEffect(Angle(degrees: 5), axis: (x: 0, y: 0, z: -3))
         
+            .alert(Strings.error, isPresented: $viewModel.showAlert) {
+                Button(role: .cancel) {
+                    viewModel.errorRemove()
+                } label: {
+                    Text("Ok")
+                }
 
+            } message: {
+                Text(viewModel.error ?? "")
+            }
     }
 }
 

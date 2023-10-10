@@ -45,6 +45,7 @@ struct CartItem: View {
                     .foregroundColor(Color.theme.blackColor)
                     .font(.subheadline)
                     .lineLimit(2)
+                    .multilineTextAlignment(.leading)
                     .padding(.horizontal,3)
                 if !product.netFillingQuantity.isEmpty{
                     HStack(spacing: 2){
@@ -137,7 +138,7 @@ struct CartItem: View {
 
 struct CartItem_Previews: PreviewProvider {
     static var previews: some View {
-        CartItem(product: .init(title: "Coca-Cola 2l Coca-Cola 2l", desc: "koffeinhaltiges Erfrischungsgetränk mit Pflanzenextrakten", price: 2, categorie: [], brand: "",sale: true, salePrice: 1.0, unit: "ml", imageUrl: "https://firebasestorage.googleapis.com:443/v0/b/biarfood-77cad.appspot.com/o/product_images%2FFFA4DBF5-B169-4EF3-8E76-E90BD931ABFE?alt=media&token=851cf925-f7cd-45cf-b8fe-ce8dfbdd7821", unitAmountPrice: "(1 l = 0,95 €)", tax: 0, articleNumber: "6729673", available: false, availableAmount: 0, deposit: true, depositType: "", depositPrice: 3.30, netFillingQuantity: "330", alcoholicContent: "", nutriScore: "", ingredientsAndAlegy: "", madeIn: "Kontaktname: Coca-Cola European Partners Deutschland GmbH Kontaktadresse: Postfach 67 01 56, 10207 Berlin", referencePoint: "", calorificKJ: "", caloricValueKcal: "", fat: "", fatFromSour: "", carbohydrates: "", CarbohydratesFromSugar: "", protein: "", salt: "", additionallyWert: "",isCold: true,isPublic: true,adult: true,minimumAge: 19))
+        CartItem(product: productExample)
             .environmentObject(CartViewModel())
     }
 }

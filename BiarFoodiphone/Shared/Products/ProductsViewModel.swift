@@ -9,11 +9,15 @@ import Foundation
 import Combine
 class ProductsViewModel: ObservableObject {
     @Published var products = [Product]()
+    @Published var productOnCart = 0
+    @Published var selectedProduct: Product? = nil
+    @Published var startAnimation: Bool = false
     private var cancellables = Set<AnyCancellable>()
     @Published var selectedCategorie: String = ""
     @Published var selectedSubCategorie = ""
 
     let productsRepository = ProductsRepository.shared
+    let cartRepository = CartRepository.shared
     
     init(){
         productsRepository.products.dropFirst()
@@ -23,7 +27,12 @@ class ProductsViewModel: ObservableObject {
             }
             .store(in: &cancellables)
             fetchProducts()
-        print(products)
+        
+        cartRepository.cartProductsId.sink{[weak self] cartProducts in
+            guard let self else {return}
+            self.productOnCart = cartProducts.count
+        }
+        .store(in: &cancellables)
     }
     
     
@@ -37,7 +46,11 @@ class ProductsViewModel: ObservableObject {
     
     
     func fetchProducts(){
-        productsRepository.fetchProducts(withCategories: selectedCategorie)
+        DispatchQueue.main.async {
+            Task{
+                self.productsRepository.fetchProducts(withCategories: self.selectedCategorie)
+            }
+        }
 
     }
     

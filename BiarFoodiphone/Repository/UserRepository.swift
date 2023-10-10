@@ -13,7 +13,9 @@ import FirebaseFirestoreSwift
 class UserRepository {
  static let shared = UserRepository()
     var userIsLoggedIn = CurrentValueSubject<Bool,Never>(false)
+    var authError = CurrentValueSubject<String?,Never>(nil)
     var user = CurrentValueSubject<User?,Never>(nil)
+    var userId = CurrentValueSubject<String?,Never>(nil)
     
     init(){
         checkAuth()
@@ -25,26 +27,26 @@ extension UserRepository {
     
     private func checkAuth() {
         guard let currentUser =  FirebaseManager.shared.auth.currentUser else {
-            print("Nicht angemeldet")
             return
         }
-        
         self.userIsLoggedIn.send(true)
         self.fetchUser(width: currentUser.uid)
-        
-        
     }
     
     func login(email: String, password: String){
         FirebaseManager.shared.auth.signIn(withEmail: email, password: password){authResult,error in
             if let error = error {
                 print("Fehler beim Anmelden:",error.localizedDescription)
+                self.authError.send(Strings.loginFailed)
                 return
             }
+            DispatchQueue.main.async {
             guard let authResult, let _ = authResult.user.email else { return }
             self.userIsLoggedIn.send(true)
-            self.fetchUser(width: authResult.user.uid)
-            
+                self.userId.send(authResult.user.uid)
+                self.fetchUser(width: authResult.user.uid)
+            }
+           
             
         }
     }
@@ -57,6 +59,7 @@ extension UserRepository {
         FirebaseManager.shared.auth.createUser(withEmail: email, password: password){authResult, error in
             if let error = error {
                 print("Fehler beim Registrieren: \(error.localizedDescription)")
+                self.authError.send(Strings.RegistrationFailed)
                 return
             }
             guard let authResult, let email = authResult.user.email else {return}
@@ -122,7 +125,7 @@ extension UserRepository {
         }
     }
     
-    private func fetchUser(width id: String){
+   private func fetchUser(width id: String){
         FirebaseManager.shared.database.collection("users").document(id).getDocument { document, error in
             if let error = error {
                 print("Fetching user failed: \(error.localizedDescription)")
@@ -144,7 +147,12 @@ extension UserRepository {
         }
     }
     
-   
-    
+    func fetchUserData(){
+        guard let userId = userId.value else {return}
+        DispatchQueue.main.asyncAfter(deadline: .now()+1){
+            self.fetchUser(width: userId)
+        }
+    }
+ 
     
 }

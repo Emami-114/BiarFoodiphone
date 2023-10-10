@@ -12,17 +12,18 @@ struct ContentView: View {
     @State var isShowingSidebar = false
     @State var navigationShow : NavigationSplitViewVisibility = .all
     @StateObject private var sidbarViewModel = SidbarViewModel()
+    @StateObject private var sidbarIpdadViewModel = SiderbarIpadViewModel()
     @EnvironmentObject var userViewModel: UserViewModel
+    @State private var showKontoSidbar: Bool = false
 
     var body: some View {
-            responsiveView { props in
-//                NavigationStack{
+        responsiveView{ props in
                 if !(props.isIpad || props.isLandscape){
                         if isShowingSidebar {
                                     SidebarView(isShowing: $isShowingSidebar)
                         }
                     if sidbarViewModel.currentItem == nil{
-                        BottomBarView(showSiderBar: $isShowingSidebar)
+                        BottomBarView(props: props, showSiderBar: $isShowingSidebar)
                             .cornerRadius(isShowingSidebar ? 40 : 0)
                             .padding(isShowingSidebar ? 20 : 0)
                             .background(isShowingSidebar ? Color.theme.white.opacity(0.2) : .clear)
@@ -39,25 +40,56 @@ struct ContentView: View {
                         sidbarViewModel.view
                     }
                            
-                               
                     }else{
-                        NavigationSplitView(columnVisibility: $navigationShow, sidebar: {
-                            SidebarView(isShowing: $isShowingSidebar)
-//                                .environmentObject(sidbarViewModel)
+                        HStack{
+                            SiderbarIpadView(showingKontoSidbar: $showKontoSidbar)
+                                .environmentObject(sidbarIpdadViewModel)
+                                .environmentObject(sidbarViewModel)
+                                .navigationSplitViewColumnWidth(220)
+                                .zIndex(0.5)
+                            Divider()
+                            Spacer()
+                            if showKontoSidbar{
+                                
+                                sidbarIpdadViewModel.view
+                                    .zIndex(1)
 
-                        }, detail: {
-                            HomeView(sidbarShowing: $isShowingSidebar)
+                            }else {
+                                SiderbarDetailsView(props: props)
+                                    .zIndex(1)
 
-                        }).navigationSplitViewStyle(.balanced)
-                            
+                            }
+                        }
+
                     }
-      
-//            }
-                    
+                
             }.background(Color.theme.backgroundColor)
 
             .environmentObject(sidbarViewModel)
+    }
+    
+ @ViewBuilder
+    func SiderbarDetailsView(props: Properties) -> some View{
+        switch self.sidbarIpdadViewModel.currentItem{
+        case Strings.home:
+            AnyView(HomeView(sidbarShowing: .constant(false), props: props, naviagtionToCart: {
+                sidbarIpdadViewModel.currentItem = Strings.shoppingCart
+            }))
 
+        case Strings.search:
+            AnyView(SearchView(props: props, navigationToCart: {
+                sidbarIpdadViewModel.currentItem = Strings.shoppingCart
+            }))
+
+        case Strings.shoppingCart:
+            AnyView(CartsView())
+
+        case Strings.favoritSeit:
+            AnyView(FavoritsView())
+
+        default:
+            AnyView(Text(""))
+        }
     }
 }
 
