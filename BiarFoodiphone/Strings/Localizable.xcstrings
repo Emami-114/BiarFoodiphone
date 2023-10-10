@@ -28,9 +28,6 @@
     "+zzgl.%@€ Pfand" : {
 
     },
-    "Abbrechen" : {
-
-    },
     "account" : {
       "localizations" : {
         "de" : {
@@ -67,6 +64,7 @@
       }
     },
     "Adresse" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -81,9 +79,6 @@
           }
         }
       }
-    },
-    "Aktualisieren" : {
-
     },
     "Anmelden" : {
       "localizations" : {
@@ -122,6 +117,9 @@
 
     },
     "Bestellungemn" : {
+
+    },
+    "Bitte geben Sie ihre Adresse!" : {
 
     },
     "Bitte geben Sie Ihre E-Mail-Adresse und Ihr Kennwort an." : {
@@ -283,9 +281,6 @@
           }
         }
       }
-    },
-    "E-Mail" : {
-
     },
     "EmailAddress" : {
       "localizations" : {
@@ -590,9 +585,6 @@
     "Nährwerte" : {
 
     },
-    "Name" : {
-
-    },
     "next" : {
       "localizations" : {
         "de" : {
@@ -630,18 +622,21 @@
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Benachrichtigung"
+            "value" : "Push"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Notification"
+            "value" : "Push"
           }
         }
       }
     },
     "Ok" : {
+
+    },
+    "OK" : {
 
     },
     "orders" : {
@@ -897,14 +892,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Warenkorb"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "shopping cart"
+            "value" : "Cart"
           }
         }
       }
@@ -925,6 +920,9 @@
         }
       }
     },
+    "Sie erhalten eine Bestätigungs-E-Mail mit einer Übersicht Ihrer Bestellung. Wenn Sie Fragen haben, kontaktieren Sie uns bitte." : {
+
+    },
     "signUp" : {
       "localizations" : {
         "de" : {
@@ -942,6 +940,9 @@
       }
     },
     "Sofort(innerhalb von 120 min)" : {
+
+    },
+    "Speichern" : {
 
     },
     "Stadt" : {
@@ -1014,6 +1015,9 @@
         }
       }
     },
+    "Vielen Dank für Ihre Bestellung" : {
+
+    },
     "Willkommen zurück!" : {
 
     },
@@ -1048,6 +1052,12 @@
           }
         }
       }
+    },
+    "Zahlung Erfolgreich" : {
+
+    },
+    "Zurück zur Startseite" : {
+
     },
     "Zwischen" : {
 

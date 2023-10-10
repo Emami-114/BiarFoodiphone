@@ -19,8 +19,7 @@ struct SidebarView: View {
                 ForEach(EnumSidbarMenu.allCases,id: \.self) { tab in
                     SiderbarItem(icon: viewModel.switchItemIcon(item: tab),
                                  title: viewModel.switchItemTitle(item: tab))
-                    
-                    .padding(.vertical,13)
+                                        .padding(.vertical,13)
                     .frame(width: 200)
                     .onTapGesture {
                         withAnimation(.easeInOut(duration: 0.6)){
@@ -94,7 +93,7 @@ struct SidebarView: View {
 struct SidebarView_Previews: PreviewProvider {
     static var previews: some View {
         SidebarView(isShowing: .constant(false))
-            .environmentObject(SliderViewModel())
+            .environmentObject(SidbarViewModel())
             .environmentObject(UserViewModel())
     }
 }

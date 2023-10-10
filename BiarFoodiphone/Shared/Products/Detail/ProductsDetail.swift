@@ -216,9 +216,12 @@ struct ProductsDetail: View {
                             viewModel.quantityminus(with: product.id ?? "")
                         }label: {
                             Image(systemName: "minus")
-                                .font(.title.bold())
+                                .font(.title2.bold())
                                 .foregroundColor(Color.theme.white)
-                        }.frame(width: 100,height: 50)
+                                .frame(width: 100,height: 50)
+                                .background(.white.opacity(0.0001))
+
+                        }
                         Text("\(viewModel.isProductOnCartQuantity(productId: product.id ?? ""))")
                             .font(.title.bold())
                             .frame(width: 100,height: 50)
@@ -227,8 +230,11 @@ struct ProductsDetail: View {
                             viewModel.quantityPlus(with: product.id ?? "")
                         }label: {
                             Image(systemName: "plus")
-                                .font(.title.bold())
+                                .font(.title2.bold())
                                 .foregroundColor(Color.theme.white)
+                                .frame(width: 100,height: 50)
+                                .background(.white.opacity(0.0001))
+
                         }
                             .frame(width: 100,height: 50)
                             .background(Color.theme.greenColor)
@@ -247,6 +253,8 @@ struct ProductsDetail: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundColor(Color.theme.white)
+                                .background(.white.opacity(0.0001))
+
                         }
                       
                     }
@@ -313,7 +321,7 @@ struct ProductsDetail: View {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(),spacing: 5), count: 3)) {
                 ForEach(viewModel.products,id: \.id) { prod in
                     NavigationLink(destination: ProductsDetail(product: prod)) {
-                        ProductCell(product: prod)
+                        ProductCell(product: prod, action: {})
                     }.buttonStyle(.plain)
                 }
             }

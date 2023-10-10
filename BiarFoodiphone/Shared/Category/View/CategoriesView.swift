@@ -39,8 +39,10 @@ struct CategoriesView: View {
 
 struct CategoriesListView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoriesView( props: .init(isLandscape: false, isIpad: false, size: CGSize(), isCompat: true), navigationToCart: {})
-            .environmentObject(CategorieViewModel())
-            .environmentObject(ProductsViewModel())
+            CategoriesView( props: .init(isLandscape: false, isIpad: false, size: CGSize(), isCompat: true), navigationToCart: {})
+                .environmentObject(CategorieViewModel())
+                .environmentObject(ProductsViewModel())
+        
+    
     }
 }

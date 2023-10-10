@@ -16,12 +16,13 @@ class SidbarViewModel : ObservableObject{
     
      var view: AnyView {
         switch self.currentItem{
-        case .account: return self.userIsLoggedIn ? AnyView(MeinProfile(dismiss: {self.currentItem = nil})) : AnyView( AuthenticationView())
+        case .account: return AnyView(AuthenticationView())
         case .order: return AnyView(Text("Bestellungemn"))
         case .help: return AnyView(Text(""))
         case .imprint: return AnyView(Text(""))
         case .notifications: return AnyView(Text(""))
         case .privacy: return AnyView(Text(""))
+        case .myAdress: return AnyView(ProfileAdresse(dismiss: {self.currentItem = nil}))
         case .none: return AnyView(Text(""))
         }
     }
@@ -39,6 +40,8 @@ class SidbarViewModel : ObservableObject{
             case .help : return Strings.help
             case .privacy : return Strings.dataProtection
             case .imprint : return Strings.imprint
+            case .myAdress:
+                return ""
             }
    
     }
@@ -51,7 +54,8 @@ class SidbarViewModel : ObservableObject{
                 case .help : return "questionmark.bubble"
                 case .privacy : return "person.badge.shield.checkmark"
                 case .imprint : return "newspaper.fill"
-        
+                case .myAdress:
+                        return ""
                 }
    
     }

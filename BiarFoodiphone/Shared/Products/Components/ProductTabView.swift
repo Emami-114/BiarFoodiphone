@@ -10,7 +10,6 @@ import SwiftUI
 struct ProductTabView: View {
     @EnvironmentObject var categoryViewModel : CategorieViewModel
     @EnvironmentObject var productViewModel : ProductsViewModel
-  
     var body: some View {
         let mainCategories = categoryViewModel.categories.filter { category in
             category.type == "Main"
@@ -27,6 +26,7 @@ struct ProductTabView: View {
             })
            
             TabBarSubView(currenTab: $productViewModel.selectedSubCategorie, tabBarOption: categoryViewModel.filterSubCategories(selectedMain: productViewModel.selectedCategorie))
+               
     }
     }
 }
@@ -47,11 +47,12 @@ struct TabBarView: View {
                                             .id(tab.id ?? "")
                                     }
                     }
-                    .onChange(of: currenTab, perform: { value in
+                    .onChange(of: currenTab, { oldValue, newValue in
                         withAnimation(.spring()){
-                            proxy.scrollTo(value, anchor: .center)
+                            proxy.scrollTo(newValue, anchor: .center)
                         }
                     })
+                    
                 }
                 
             }
@@ -97,20 +98,29 @@ struct TabBarSubView: View {
     @Binding var currenTab : String
     var tabBarOption: [Category]
     @Namespace var nameSpace
-   
     var body: some View{
-                ScrollView(.horizontal,showsIndicators: false) {
-                    HStack(spacing: 20){
-                            ForEach(tabBarOption,id: \.id) {tab in
-                                TabBarSubItem(tabBarItemName: tab.name, nameSpace: nameSpace, currentTab: self.$currenTab, tabID: tab.id ?? "")
-                            }
-                        
-                    }
-                   
+            ScrollView(.horizontal,showsIndicators: false) {
+                ScrollViewReader { proxy in
+
+                HStack(spacing: 20){
+                        ForEach(tabBarOption,id: \.id) {tab in
+                            TabBarSubItem(tabBarItemName: tab.name, nameSpace: nameSpace, currentTab: self.$currenTab, tabID: tab.id ?? "")
+                                .id(tab.id ?? "")
+                        }
+                    
                 }
-                .padding(.horizontal)
-                .frame(height: 50,alignment: .center)
-                .background(Color.clear)
+                .onChange(of: currenTab, { oldValue, newValue in
+                    withAnimation(.spring()){
+                        proxy.scrollTo(newValue, anchor: .center)
+                    }
+                })
+            }
+            .padding(.horizontal)
+            .frame(height: 50,alignment: .center)
+            .background(Color.clear)
+            
+        }
+                
                 
     }
 }

@@ -21,6 +21,7 @@ struct DefaultTextField: ViewModifier {
             .lineLimit(1)
             .foregroundColor(Color.theme.iconColor)
             .autocorrectionDisabled(true)
+            .textInputAutocapitalization(.never)
             .focused($focusState)
             .padding(.horizontal,padding)
             .frame(height: frameHeight)

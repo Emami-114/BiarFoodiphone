@@ -65,10 +65,11 @@ class ProductCellViewModel: ObservableObject {
         cartRepository.fetchCartProductId()
     }
 
-    func addCartProductId(with productId: String){
+    func addCartProductId(with productId: String,action: @escaping () -> Void){
         self.loading = true
         DispatchQueue.main.asyncAfter(deadline: .now()+1){
             self.cartRepository.addCartProductId(productId: productId)
+            action()
             self.fetchCartProductsId()
             self.loading = false
             

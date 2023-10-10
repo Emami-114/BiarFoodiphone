@@ -74,13 +74,10 @@ struct SignUpView: View {
                     .font(.footnote)
             }
             
-            
             Button{
-                if viewModel.userIsLogged{
-                    sidbarViewModel.currentItem = nil
-                }else{
-                    viewModel.register()
-                }
+                viewModel.register(action: {
+                    sidbarViewModel.currentItem = .myAdress
+                })
             }label: {
                 if viewModel.loading{
                     ProgressView()

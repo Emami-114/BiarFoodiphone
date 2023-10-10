@@ -9,6 +9,7 @@ import SwiftUI
 
 struct OrderAdress: View {
     @EnvironmentObject private var viewModel : OrderAdressViewModel
+    @EnvironmentObject private var orderViewModel: OrderViewModel
     @FocusState private var adressFieldFocused : Bool
     @State private var showAdressDetail = false
     var body: some View {
@@ -67,13 +68,28 @@ struct OrderAdress: View {
                 }label: {
                     Text(Strings.provideAnewAddress)
                 }
+                Spacer()
                 
+                Button{
+                    orderViewModel.currentView = .deliverytime
+                       
+                }label: {
+                    if orderViewModel.loading{
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.theme.white))
+                    }else{
+                        Text(Strings.next)
+                            .font(.title2)
+                            .foregroundColor(Color.theme.white)
+                    }
+                   
+                      
+                }  .frame(width: 300,height: 50)
+                    .background(RoundedRectangle(cornerRadius: 15).fill(Color.theme.greenColor))
             }
-            .onChange(of: viewModel.street2, perform: { value in
-                viewModel.fetchAdresseCompletet(adreese: value)
-            })
+            
+           
         }
-
         .animation(.spring(response: 0.4,dampingFraction: 0.6,blendDuration: 1), value: showAdressDetail)
     }
     
@@ -90,6 +106,12 @@ struct OrderAdress: View {
                 TextField(Strings.street, text: $viewModel.street2)
                     .DefaultTextFieldModifier(paddingHorizontal: 0)
                     .focused($adressFieldFocused)
+                    .onChange(of: viewModel.street2, { oldValue, newValue in
+                        Task{
+                           try await viewModel.fetchAdresseCompletet(adreese: newValue)
+                        }
+
+                    })
                 TextField(Strings.houseNumber, text: $viewModel.houseNumber2)
                     .DefaultTextFieldModifier(paddingHorizontal: 0)
             }.padding(.horizontal)

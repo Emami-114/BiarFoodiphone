@@ -44,12 +44,12 @@ class SignupViewModel: ObservableObject {
     
     
     
-    func register() {
+    func register(action: @escaping () -> Void) {
         loading = true
-        DispatchQueue.main.asyncAfter(deadline: .now()+1.2){
+        DispatchQueue.main.asyncAfter(deadline: .now()+2){
             self.userRepository.register(email: self.email, password: self.password, salutation: self.salutation, firstName: self.firstName, lastName: self.lastName, street: self.street, houseNumBer: self.houseNumBer, zipCode: self.zipCode,rolle: self.rolle,emailConfirm: self.emailConfirm,phoneNumber: self.phoneNumber,country: self.country, city: self.city)
             self.loading = false
-
+            action()
         }
     }
     

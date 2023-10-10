@@ -46,6 +46,7 @@ struct FavoriteCell: View {
                         .font(.subheadline)
                         .lineLimit(2)
                         .padding(.horizontal,3)
+                        .multilineTextAlignment(.leading)
                 
                 if !product.netFillingQuantity.isEmpty{
                     HStack(spacing: 2){

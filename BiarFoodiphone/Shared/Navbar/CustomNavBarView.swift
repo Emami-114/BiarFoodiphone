@@ -23,12 +23,16 @@ struct CustomNavBarView: View{
                     .opacity(showBackButton ? 1 : 0)
                 
                 Spacer()
-                titleSection
+                    titleSection
+                
+                
                 Spacer()
                     trillingButton
                     .opacity(showTrillingButton ? 1 : 0)
                 
             }
+            .frame(height: 15)
+
             .padding()
             .accentColor(Color.theme.white)
             .foregroundColor(Color.theme.white)

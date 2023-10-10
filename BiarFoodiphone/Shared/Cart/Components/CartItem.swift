@@ -45,6 +45,7 @@ struct CartItem: View {
                     .foregroundColor(Color.theme.blackColor)
                     .font(.subheadline)
                     .lineLimit(2)
+                    .multilineTextAlignment(.leading)
                     .padding(.horizontal,3)
                 if !product.netFillingQuantity.isEmpty{
                     HStack(spacing: 2){

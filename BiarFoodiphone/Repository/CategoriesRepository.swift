@@ -12,11 +12,10 @@ import Combine
 class CategoriesRepository {
     static let shared = CategoriesRepository()
     var categories = CurrentValueSubject<[Category],Never>([])
+    var mainCategories = CurrentValueSubject<[Category],Never>([])
     
-
     
     func fetchCategories(){
-        
         FirebaseManager.shared.database.collection("categories")
             .addSnapshotListener { querySnapshot, error in
                 if let error = error {
@@ -35,6 +34,9 @@ class CategoriesRepository {
                 }
                 
                 self.categories.send(categories)
+                self.mainCategories.send(categories.filter({ catgory in
+                    catgory.type == "Main"
+                }))
             }
     }
     

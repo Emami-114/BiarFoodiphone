@@ -21,6 +21,7 @@ class OrderAdressViewModel: ObservableObject {
     @Published var phoneNumber = ""
     @Published var country = ""
     @Published var city = ""
+    @Published var userId = ""
     
     
     
@@ -43,20 +44,21 @@ class OrderAdressViewModel: ObservableObject {
         userRepository.user.sink{[weak self] user in
             guard let self else {return}
             guard let user = user else {return}
-            self._salutation = Published(initialValue: user.salutation)
-            self._firstName = Published(initialValue: user.firstName)
-            self._lastName = Published(initialValue: user.lastName)
-            self._street = Published(initialValue: user.street)
-            self._houseNumber = Published(initialValue: user.houseNumBer)
-            self._zipCode = Published(initialValue: user.zipCode)
-            self._email = Published(initialValue: user.email)
-            self._phoneNumber = Published(initialValue: user.phoneNumber)
-            self._country = Published(initialValue: user.country)
-            self._city = Published(initialValue: user.city)
+            self.salutation = user.salutation
+            self.firstName = user.firstName
+            self.lastName = user.lastName
+            self.street = user.street
+            self.houseNumber = user.houseNumBer
+            self.zipCode = user.zipCode
+            self.email = user.email
+            self.phoneNumber = user.phoneNumber
+            self.country = user.country
+            self.city = user.city
         }.store(in: &cancellable)
-        
+
         
     }
+  
     
     func newAdresse(){
 
@@ -75,10 +77,9 @@ class OrderAdressViewModel: ObservableObject {
     func selectedAdresseReplace(){
         guard let terms = self.selectedAdresse?.terms else {return}
       
-       
         self.street2 = terms[0].value
-        self.houseNumber2 = terms[1].value
-        self.zipCode2 = terms.count == 2 ? terms[2].value : ""
+        self.city2 = terms[1].value
+//        self.zipCode2 = terms.count == 3 ? terms[2].value : ""
 //        self.city2 = terms.contains(inde) ? terms[3].value : ""
 //        self.country2 = terms.count == 4 ? terms[4].value : ""
         
@@ -108,14 +109,10 @@ class OrderAdressViewModel: ObservableObject {
         self.city2 = ""
     }
     
-    func fetchAdresseCompletet(adreese: String) {
-        DispatchQueue.main.async {
-            Task{
+    func fetchAdresseCompletet(adreese: String)async throws {
                 let adressResult2 = try await self.adressAutocompleteRepository
                     .autoCompletet(input: adreese)
                 self.adressResult = adressResult2
-            }
-        }
 
     }
     

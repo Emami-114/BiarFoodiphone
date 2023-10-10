@@ -10,6 +10,8 @@ import Combine
 class ProductsViewModel: ObservableObject {
     @Published var products = [Product]()
     @Published var productOnCart = 0
+    @Published var selectedProduct: Product? = nil
+    @Published var startAnimation: Bool = false
     private var cancellables = Set<AnyCancellable>()
     @Published var selectedCategorie: String = ""
     @Published var selectedSubCategorie = ""

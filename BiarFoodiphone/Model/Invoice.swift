@@ -9,7 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-struct Order: Codable{
+struct Invoice: Codable{
     @DocumentID var id: String?
     let userId: String
     let successful: Bool
@@ -20,11 +20,16 @@ struct Order: Codable{
     let deliveryDate: Date?
     let paymentType: String
     let paymentSuccess: Bool
-    let products : [OrderProduct]
+    let email: String
+    let invoiceNum: String
+    let totalPrice: Double
+    let deliveryAddressDifferent : Bool
+    let products : [InvoiceProduct]
+    var paymentToken: String? = nil
     var createdAt : Timestamp = Timestamp()
 
 }
-struct OrderProduct: Codable{
+struct InvoiceProduct: Codable{
     let id: String
     let name: String
     let quantity: Int

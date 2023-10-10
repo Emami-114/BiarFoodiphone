@@ -35,8 +35,23 @@ struct DeliveryTime: View {
                 
                 .background(RoundedRectangle(cornerRadius: 15).stroke(lineWidth: 0.5))
                 .padding(40)
-                
-           
+                Spacer()
+            Button{
+                viewModel.currentView = .payment
+                   
+            }label: {
+                if viewModel.loading{
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: Color.theme.white))
+                }else{
+                    Text(Strings.next)
+                        .font(.title2)
+                        .foregroundColor(Color.theme.white)
+                }
+               
+                  
+            }  .frame(width: 300,height: 50)
+                .background(RoundedRectangle(cornerRadius: 15).fill(Color.theme.greenColor))
         }
     }
 }
@@ -44,6 +59,6 @@ struct DeliveryTime: View {
 struct DeliveryTime_Previews: PreviewProvider {
     static var previews: some View {
         DeliveryTime()
-            .environmentObject(OrderViewModel(products: []))
+            .environmentObject(OrderViewModel(products: [], totalPrice: 0.0))
     }
 }

@@ -21,7 +21,7 @@ struct BottomBarView: View {
                             AnyView(HomeView(sidbarShowing: $showSiderBar, props: props, naviagtionToCart: {viewModel.currentItem = .cart}))
                                 .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                         case .search:
-                            AnyView(SearchView())
+                            AnyView(SearchView(props: props, navigationToCart: {viewModel.currentItem = .cart}))
                                 .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                         case .cart:
                             AnyView(CartsView())
@@ -73,7 +73,9 @@ struct BottomBarView: View {
 
 struct BottomBarView_Previews: PreviewProvider {
     static var previews: some View {
-        BottomBarView(props: .init(isLandscape: false, isIpad: false, size: CGSize(width: 400, height: 800), isCompat: false), showSiderBar: .constant(false))
+            BottomBarView(props: .init(isLandscape: false, isIpad: false, size: CGSize(width: 400, height: 800), isCompat: false), showSiderBar: .constant(false))
+        
+        
     }
 }
 

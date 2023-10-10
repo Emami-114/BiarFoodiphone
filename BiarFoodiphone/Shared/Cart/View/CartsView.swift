@@ -100,7 +100,7 @@ struct CartsView: View {
             .foregroundColor(Color.theme.iconColor)
             .padding(.horizontal,25)
             
-            NavigationLink(destination: OrderView(products: viewModel.ordrProducts())){
+            NavigationLink(destination: OrderView(products: viewModel.ordrProducts(), totalPrice: viewModel.totalPrice())){
                 Text(Strings.checkout)
             
                 .font(.title3.bold())

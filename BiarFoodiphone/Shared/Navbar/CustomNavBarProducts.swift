@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomNavBarProducts: View{
     var showBackButton: Bool = true
     var showTrillingButton: Bool = true
-    var title: String = "mngnmtt"
+    var title: String = ""
      var trillingButtonIcon: String = "cart"
     var color: Color = Color.theme.greenColor
     @Binding var cartCount : Int
@@ -31,6 +31,7 @@ struct CustomNavBarProducts: View{
             .accentColor(Color.theme.white)
             .foregroundColor(Color.theme.white)
             .font(.headline)
+            .frame(height: 15)
             .background(color.ignoresSafeArea(edges: .top).shadow(radius: 5))
         
     }

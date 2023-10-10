@@ -37,6 +37,8 @@ class SiderbarIpadViewModel : ObservableObject{
             case .help : return Strings.help
             case .privacy : return Strings.dataProtection
             case .imprint : return Strings.imprint
+            case .myAdress:
+                return ""
             }
    
     }
@@ -50,6 +52,8 @@ class SiderbarIpadViewModel : ObservableObject{
                 case .privacy : return "person.badge.shield.checkmark"
                 case .imprint : return "newspaper.fill"
         
+                case .myAdress:
+                    return ""
                 }
    
     }

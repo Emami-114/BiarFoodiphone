@@ -41,23 +41,26 @@ struct ContentView: View {
                     }
                            
                     }else{
-                            NavigationSplitView(columnVisibility: $navigationShow, sidebar: {
-                                SiderbarIpadView(showingKontoSidbar: $showKontoSidbar)
-                                    .environmentObject(sidbarIpdadViewModel)
-                                    .environmentObject(sidbarViewModel)
-                                    .navigationSplitViewColumnWidth(220)
-                            }, detail: {
-                                if showKontoSidbar{
-                                    sidbarIpdadViewModel.view
-                                        .transition(.slide)
-                                }else {
-                                    SiderbarDetailsView(props: props)
-                                        .transition(.slide)
+                        HStack{
+                            SiderbarIpadView(showingKontoSidbar: $showKontoSidbar)
+                                .environmentObject(sidbarIpdadViewModel)
+                                .environmentObject(sidbarViewModel)
+                                .navigationSplitViewColumnWidth(220)
+                                .zIndex(0.5)
+                            Divider()
+                            Spacer()
+                            if showKontoSidbar{
+                                
+                                sidbarIpdadViewModel.view
+                                    .zIndex(1)
 
-                                }
-                               
-                            })
-                        .navigationSplitViewStyle(.balanced)
+                            }else {
+                                SiderbarDetailsView(props: props)
+                                    .zIndex(1)
+
+                            }
+                        }
+
                     }
                 
             }.background(Color.theme.backgroundColor)
@@ -72,12 +75,18 @@ struct ContentView: View {
             AnyView(HomeView(sidbarShowing: .constant(false), props: props, naviagtionToCart: {
                 sidbarIpdadViewModel.currentItem = Strings.shoppingCart
             }))
+
         case Strings.search:
-            AnyView(SearchView())
+            AnyView(SearchView(props: props, navigationToCart: {
+                sidbarIpdadViewModel.currentItem = Strings.shoppingCart
+            }))
+
         case Strings.shoppingCart:
             AnyView(CartsView())
+
         case Strings.favoritSeit:
             AnyView(FavoritsView())
+
         default:
             AnyView(Text(""))
         }

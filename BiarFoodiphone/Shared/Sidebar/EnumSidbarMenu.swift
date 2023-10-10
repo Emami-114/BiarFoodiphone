@@ -13,6 +13,7 @@ case notifications
 case help
 case privacy
 case imprint
+    case myAdress
 }
 
 enum EnumSidbarMenuIpad: CaseIterable {

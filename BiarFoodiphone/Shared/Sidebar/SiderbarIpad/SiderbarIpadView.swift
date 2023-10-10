@@ -4,62 +4,96 @@ struct SiderbarIpadView: View {
     @State var currenItem : EnumSidbarMenuIpad = .home
     @Namespace var nameSpace
     @Binding var showingKontoSidbar: Bool
+    @State private var siderbarOpen = false
     var body: some View{
         VStack(alignment: .leading,spacing: 10){
+            CustomNavBarView(showBackButton: false, title: "",trillingButtonAction: {}, backButtonAction: {})
+            HStack{
+                Spacer()
+                Button{
+                    withAnimation(.easeInOut(duration: 0.4)){
+                        siderbarOpen.toggle()
+                    }
+                }label: {
+                    Image(systemName: siderbarOpen ? "chevron.backward.2" : "chevron.forward.2")
+                        .foregroundColor(Color.theme.iconColor)
+                        .font(.title3.bold())
+                }
+            }.padding()
 //            Profile
             if showingKontoSidbar{
                 SidbarKonto
-                    .transition(.slide)
+                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             }else{
                 SiderbarIpad
-                    .transition(.slide)
+                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
 
             }
                         Spacer()
 
         }.navigationBarBackButtonHidden(true)
-            .padding(.top,30)
-        .padding(.vertical,30)
+//            .padding(.top,30)
+//        .padding(.vertical,30)
+            .frame(width: siderbarOpen ? 250 : 100)
         .background(Color.theme.backgroundColor)
-        .animation(.easeInOut(duration: 0.3),value: self.showingKontoSidbar)
+        .animation(.easeInOut(duration: 0.4),value: self.showingKontoSidbar)
     }
     
     private var SidbarKonto: some View{
-        LazyVStack(alignment: .leading){
+        LazyVStack(alignment: .center){
             ForEach(EnumSidbarMenu.allCases,id: \.self) { tab in
-                SiderbarItemForIpad(currentItem: $viewModel.currentItemKonto, title: viewModel.switchItemTitle(item: tab),icon: viewModel.switchItemIcon(item: tab), showSidbar: $showingKontoSidbar, nameSpace: nameSpace)
+                SiderbarItemForIpad(currentItem: $viewModel.currentItemKonto, title: viewModel.switchItemTitle(item: tab),icon: viewModel.switchItemIcon(item: tab), showSidbar: $showingKontoSidbar, siderbarOpen: $siderbarOpen, nameSpace: nameSpace)
               
                 
             }
             Button{
-                showingKontoSidbar.toggle()
+                withAnimation(.easeInOut(duration: 0.4)) {
+                    showingKontoSidbar.toggle()
+                }
             }label: {
-                Image(systemName: "rectangle.grid.2x2")
-                Text("Menu")
+                
+                HStack{
+                    Image(systemName: "rectangle.grid.2x2")
+                    if siderbarOpen{
+                        Text("Menu")
+                        Image(systemName: "chevron.forward.2")
+                    }
+                    Spacer()
+
+                }
             }.buttonStyle(.plain)
                 .font(.title3)
                 .fontWeight(.semibold)
-                .padding(.horizontal,35)
+                .padding(.horizontal,25)
                 .padding()
         }
     }
     
     private var SiderbarIpad: some View{
-        LazyVStack(alignment: .leading){
+        LazyVStack(alignment: .center){
             ForEach(EnumSidbarMenuIpad.allCases,id: \.self) { tab in
-                SiderbarItemForIpad(currentItem: $viewModel.currentItem, title: tab.title,icon: tab.icon, showSidbar: $showingKontoSidbar, nameSpace: nameSpace)
+                SiderbarItemForIpad(currentItem: $viewModel.currentItem, title: tab.title,icon: tab.icon, showSidbar: $showingKontoSidbar, siderbarOpen: $siderbarOpen, nameSpace: nameSpace)
               
                 
             }
             Button{
-                showingKontoSidbar.toggle()
+                withAnimation(.easeInOut(duration: 0.4)) {
+                    showingKontoSidbar.toggle()
+                }
             }label: {
-                Image(systemName: "person")
-                Text("Konto")
+                HStack{
+                    Image(systemName: "person")
+                    if siderbarOpen{
+                        Text("Konto")
+                        Image(systemName: "chevron.forward.2")
+
+                    }
+                    Spacer()
+                }
             }.buttonStyle(.plain)
                 .font(.title3)
                 .fontWeight(.semibold)
-                .padding(.horizontal,35)
+                .padding(.horizontal,25)
                 .padding()
         }
     }

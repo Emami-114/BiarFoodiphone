@@ -49,6 +49,7 @@ class CartViewModel: ObservableObject {
         }
     }
     
+    
     func fetchCartProductsId(){
         cartRepo.fetchCartProductId()
     }
@@ -66,14 +67,14 @@ class CartViewModel: ObservableObject {
     
     
     
-    func ordrProducts() -> [OrderProduct]{
-        var orderproducts = [OrderProduct]()
+    func ordrProducts() -> [InvoiceProduct]{
+        var orderproducts = [InvoiceProduct]()
         for i in cartProductsId{
          let product = cartProducts.filter { product in
                 product.id == i.productId
          }.first
             guard let product1 = product else { return [] }
-            orderproducts.append(OrderProduct(id: product1.id ?? "", name: product1.title, quantity: i.quantity, netWeight: product1.netFillingQuantity, depositType: product1.deposit ? product1.depositType : nil, depositPrice: product1.deposit ? product1.depositPrice : nil, imageUrl: product1.imageUrl, price: product1.price, tax: product1.tax))
+            orderproducts.append(InvoiceProduct(id: product1.id ?? "", name: product1.title, quantity: i.quantity, netWeight: product1.netFillingQuantity, depositType: product1.deposit ? product1.depositType : nil, depositPrice: product1.deposit ? product1.depositPrice : nil, imageUrl: product1.imageUrl, price: product1.price, tax: product1.tax))
         }
         return orderproducts
     }
