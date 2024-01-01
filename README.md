@@ -4,6 +4,7 @@
 ### Google Address Autocomplete API
 ### MVVM pattern
 ### Swift UI
+### Braintree SDK for Paypal Payment
 
 
 ![Simulator Screenshot - iPhone 15 Pro - 2024-01-01 at 17 16 43](https://github.com/Emami-114/BiarFoodiphone/assets/114245656/5a858c65-08d2-48c3-bdac-9a97ab60d91d)
