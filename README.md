@@ -1,5 +1,5 @@
 # BiarFoodiphone
-### "This app is designed for a food delivery service and utilizes the following tools:
+## This app is designed for a food delivery service and utilizes the following tools:
 ### Firebase
 ### Google Address Autocomplete API
 ### MVVM pattern
